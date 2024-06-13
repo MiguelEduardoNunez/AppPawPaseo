@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_map"
+    app:startDestination="@id/paseosFragment">
+
+    <fragment
+        android:id="@+id/paseosFragment"
+        android:name="com.example.aplicationpaw.views.ui.paseos.PaseosFragment"
+        android:label="fragment_paseos"
+        tools:layout="@layout/fragment_paseos" />
+
+    <fragment
+        android:id="@+id/guarderiaFragment"
+        android:name="com.example.aplicationpaw.views.ui.guarderia.GuarderiaFragment"
+        android:label="fragment_guarderia"
+        tools:layout="@layout/fragment_guarderia" />
+
+    <fragment
+        android:id="@+id/veterinariaFragment"
+        android:name="com.example.aplicationpaw.views.ui.veterinaria.VeterinariaFragment"
+        android:label="fragment_veterinaria"
+        tools:layout="@layout/fragment_veterinaria" />
+</navigation>

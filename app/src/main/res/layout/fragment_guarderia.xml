@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.ui.guarderia.GuarderiaFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+
+        <Button
+            android:id="@+id/ubicacion2"
+            android:layout_width="360dp"
+            android:layout_height="50dp"
+            android:textColor="@color/black"
+            android:text="@string/tu_ubicacion"
+            android:backgroundTint="@color/piel"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/servicio1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.375"/>
+
+        <Button
+            android:id="@+id/servicio1"
+            android:layout_width="360dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/piel"
+            android:text="@string/servicio_que_requieres"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnBuscarMenu2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ubicacion2"/>
+
+
+        <Button
+            android:id="@+id/btnBuscarMenu2"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/amarillo"
+            android:text="@string/buscar"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
