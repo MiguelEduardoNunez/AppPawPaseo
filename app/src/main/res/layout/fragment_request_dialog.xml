@@ -23,23 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Enviar Solicitud" />
-
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"
-            android:paddingTop="16dp"
-            android:text="@string/initial_price"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/increaseButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Aumentar en 500"
-            android:visibility="gone" />
     </LinearLayout>
 
 </FrameLayout>

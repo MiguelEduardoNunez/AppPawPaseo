@@ -26,4 +26,9 @@
     <string name="google_maps_key">AIzaSyCo9IdLzlhBnPEdlDOrY7gFY2NnNyrA1NM</string>
     <string name="initial_price">Precio: $0.0</string>
     <string name="price_format">Precio: $%.1f</string>
+    <string name="tittle_actualizacion">¡Puedes Actualizar los Datos!</string>
+    <string name="registrar">--------------- Registrarse ---------------</string>
+    <string name="confirme_su_contrase_a">Confirme su contraseña</string>
+    <string name="registrarse">registrarse</string>
+    <string name="acceder"><b><u>acceder</u></b></string>
 </resources>

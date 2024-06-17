@@ -1,113 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".views.login.Login">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/cabeza" />
-
-
     <LinearLayout
+        android:id="@+id/ViewLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:onClick="openGmail"
-            android:src="@drawable/gmail" />
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cabeza" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="70dp"
-            android:onClick="openfacebook"
-            android:src="@drawable/facebook" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="70dp"
-            android:onClick="openX"
-            android:src="@drawable/x" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/sesion"
-        android:textColor="#000"
-        android:textSize="18sp" />
-
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/txtCorreo"
-        android:layout_width="390dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/user_icon"
-        android:drawablePadding="10dp"
-        android:hint="@string/usuario_o_correo_electronico"
-        android:padding="10dp" />
-
-
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/txtPassword"
-        android:layout_width="390dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:drawableStart="@drawable/password_icon"
-        android:drawablePadding="10dp"
-        android:hint="@string/contrase_a"
-        android:inputType="textPassword"
-        android:padding="10dp" />
-
-    <LinearLayout
-        android:layout_width="390dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/olvidaste_tu_contrase_a"
-            android:textAlignment="textEnd"
-            android:textSize="12sp" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:onClick="openGmail"
+                android:src="@drawable/gmail" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="70dp"
+                android:onClick="openfacebook"
+                android:src="@drawable/facebook" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="70dp"
+                android:onClick="openX"
+                android:src="@drawable/x" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/sesion"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtCorreo"
+                android:layout_width="390dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/user_icon"
+                android:drawablePadding="10dp"
+                android:hint="@string/usuario_o_correo_electronico"
+                android:padding="10dp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtPassword"
+                android:layout_width="390dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/password_icon"
+                android:drawablePadding="10dp"
+                android:hint="@string/contrase_a"
+                android:inputType="textPassword"
+                android:padding="10dp" />
+
+            <LinearLayout
+                android:layout_width="390dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/olvidaste_tu_contrase_a"
+                    android:textAlignment="textEnd"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnInicioSesion"
+                android:layout_width="390dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/bordes"
+                android:text="Iniciar sesión"
+                android:textSize="17sp"
+                app:backgroundTint="@color/verded" />
+
+            <TextView
+                android:id="@+id/btnRegistrarse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/crear"
+                android:textSize="15sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnInicioSesion"
-        android:layout_width="390dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/bordes"
-        android:text="Iniciar sesión"
-        android:textSize="17sp"
-        app:backgroundTint="@color/verded" />
-
-    <TextView
-        android:id="@+id/linkRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:text="@string/crear"
-        android:textSize="15sp" />
-</LinearLayout>
+</ScrollView>

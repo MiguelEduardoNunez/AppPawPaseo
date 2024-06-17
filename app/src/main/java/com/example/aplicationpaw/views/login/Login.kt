@@ -1,12 +1,20 @@
 package com.example.aplicationpaw.views.login
 
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aplicationpaw.MainActivity
 import com.example.aplicationpaw.R
+import com.example.aplicationpaw.views.editar_perfil.EditarPerfil
+import com.example.aplicationpaw.views.register.Register
 import com.example.vfragment.modelos.CredencialesLogin
 import com.example.vfragment.modelos.UsuarioResponse
 import com.example.vfragment.networking.ApiService
@@ -19,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Login : AppCompatActivity() {
     private lateinit var apiService: ApiService
-
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +43,15 @@ class Login : AppCompatActivity() {
             return
         }
 
-        enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
+        findViewById<View>(R.id.ViewLogin).setOnTouchListener { v, _ ->
+            hideKeyboard(v)
+            false
+        }
+
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://prueba-backend-phi.vercel.app/api/")
+            .baseUrl("https://pawpaseo-backend-phi.vercel.app/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -49,18 +61,29 @@ class Login : AppCompatActivity() {
         val txtCorreo = findViewById<TextInputEditText>(R.id.txtCorreo)
         val txtPassword = findViewById<TextInputEditText>(R.id.txtPassword)
 
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Validando credenciales...")
+        progressDialog.setCancelable(false)
 
         btnInicioSesion.setOnClickListener {
             val email = txtCorreo.text.toString()
             val password = txtPassword.text.toString()
 
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+
             val credenciales = CredencialesLogin(email, password)
+            progressDialog.show()
 
             apiService.login(credenciales).enqueue(object : Callback<UsuarioResponse> {
                 override fun onResponse(
                     call: Call<UsuarioResponse>,
                     response: retrofit2.Response<UsuarioResponse>
                 ) {
+                    progressDialog.dismiss()
                     if (response.isSuccessful && response.body() != null) {
                         // Inicio de sesión exitoso
                         val usuario = response.body()!!
@@ -74,6 +97,7 @@ class Login : AppCompatActivity() {
 
                         val intent = Intent(this@Login, MainActivity::class.java)
                         startActivity(intent)
+                        finish()
 
                     } else {
                         // Error al iniciar sesión
@@ -83,6 +107,7 @@ class Login : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<UsuarioResponse>, t: Throwable) {
+                    progressDialog.dismiss()
                     // Error al realizar la solicitud
                     Toast.makeText(
                         this@Login,
@@ -92,6 +117,15 @@ class Login : AppCompatActivity() {
                 }
             })
         }
-    }
 
+        val btnRegistrarse = findViewById<TextView>(R.id.btnRegistrarse)
+        btnRegistrarse.setOnClickListener {
+            val intent = Intent(this, Register::class.java)
+            startActivity(intent)
+        }
+    }
+    private fun hideKeyboard(view: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

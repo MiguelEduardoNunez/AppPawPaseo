@@ -1,29 +1,30 @@
 package com.example.aplicationpaw.views.ui.mapa
 
+import RequestService
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.aplicationpaw.R
+import com.example.aplicationpaw.modelos.Coordenada
+import com.example.aplicationpaw.modelos.CrearPeticionRequest
+import com.example.aplicationpaw.modelos.RespuestaServidor
 import com.example.aplicationpaw.views.ui.dialogo.RequestDialogFragment
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.GeoApiContext
 import com.google.maps.DirectionsApi
@@ -32,6 +33,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener, RequestDialogFragment.RequestDialogListener {
 
@@ -40,7 +44,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
     private var locationCallback: LocationCallback? = null
     private var startLatLng: LatLng? = null
     private var endLatLng: LatLng? = null
-    private var currentPrice: Double = 0.0
+    private lateinit var apiService: RequestService
+    private val baseUrl = "https://prueba-backend-phi.vercel.app/api/"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,9 +59,83 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Configuración de Retrofit
+        val retrofit = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        // Crear instancia de la interfaz de servicio
+        apiService = retrofit.create(RequestService::class.java)
+
         // Inicializar el mapa
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapa) as SupportMapFragment
         mapFragment.getMapAsync(this)
+    }
+
+    private fun enviarDatosRutaYPrecio() {
+        // Obtener los puntos de ruta y precio
+        val puntosRuta = obtenerPuntosRutaDesdeMapa()
+        val precio = obtenerPrecioIngresado()
+
+        // Verificar que los puntos de ruta y precio no estén vacíos
+        if (puntosRuta.isEmpty() || precio.isEmpty()) {
+            Log.e(TAG, "Puntos de ruta o precio están vacíos")
+            return
+        }
+
+        // Suponiendo que estamos tomando la primera coordenada como ejemplo
+        val coordenada = puntosRuta[0]
+
+        // Crear objeto de solicitud
+        val request = CrearPeticionRequest(
+            longitud = coordenada.longitud,
+            latitud = coordenada.latitud,
+            precio = precio.toDouble(),
+            descripcion = "Descripción de la petición", // Ajusta esto según tu lógica
+            estado = "En espera",
+            date = Date(),
+            user = "user_id", // Reemplaza con el ID del usuario real
+            paseador = null // Ajusta esto según tu lógica
+        )
+
+        // Realizar la llamada POST a la API
+        val call = apiService.crearPeticion(request)
+        call.enqueue(object : Callback<RespuestaServidor> {
+            override fun onResponse(call: Call<RespuestaServidor>, response: Response<RespuestaServidor>) {
+                if (response.isSuccessful) {
+                    val respuestaServidor = response.body()
+                    respuestaServidor?.let {
+                        // Manejar la respuesta del servidor si es necesaria
+                        Log.d(TAG, "Respuesta del servidor: ${it.mensaje}")
+                    }
+                } else {
+                    // Manejar errores de respuesta del servidor
+                    Log.e(TAG, "Error en la respuesta: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RespuestaServidor>, t: Throwable) {
+                // Manejar error en la llamada
+                Log.e(TAG, "Error en la llamada: ${t.message}")
+            }
+        })
+    }
+
+    private fun obtenerPuntosRutaDesdeMapa(): List<Coordenada> {
+        // Aquí puedes implementar la lógica para obtener los puntos de la ruta desde el mapa
+        // Ejemplo:
+        val puntosRuta = mutableListOf<Coordenada>()
+        // Obtener los puntos de la ruta y añadirlos a la lista puntosRuta
+        // puntosRuta.add(Coordenada(latitud, longitud))
+        return puntosRuta
+    }
+
+    private fun obtenerPrecioIngresado(): String {
+        // Aquí puedes implementar la lógica para obtener el precio ingresado
+        // Ejemplo:
+        val editTextPrecio: EditText = view?.findViewById(R.id.priceEditText) ?: return ""
+        return editTextPrecio.text.toString()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -84,7 +163,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                null
+            )
             mMap.isMyLocationEnabled = true
         } else {
             requestPermissions(
@@ -95,23 +178,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
 
         val defaultLocation = LatLng(2.43823, -76.61316)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12f))
-
-        mMap.setOnMarkerClickListener { marker ->
-            if (marker.title?.startsWith("Precio") == true) {
-                increasePrice()
-                true
-            } else {
-                false
-            }
-        }
     }
-
-    private fun increasePrice() {
-        currentPrice += 500.0 // Aumentar el precio en 500 (o la cantidad que desees)
-        mMap.clear() // Limpiar el mapa para eliminar el marcador anterior
-        showPriceMarker(currentPrice.toString()) // Mostrar el marcador actualizado con el nuevo precio
-    }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -178,8 +245,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
         dialog.show(parentFragmentManager, "RequestDialogFragment")
     }
 
-
-
     private suspend fun requestDirections(startLatLng: LatLng, endLatLng: LatLng) {
         try {
             val geoApiContext = GeoApiContext.Builder()
@@ -221,29 +286,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
     }
 
     override fun onPriceEntered(price: String) {
-        // Mostrar la ruta en el mapa
+        // Aquí se podría manejar la lógica del precio ingresado si fuera necesario
         drawRoute(startLatLng, endLatLng)
-
-        // Mostrar el marcador con el precio ingresado
-        showPriceMarker(price)
     }
-    private fun showPriceMarker(price: String) {
-        if (startLatLng != null && endLatLng != null) {
-            val midPoint = LatLng(
-                (startLatLng!!.latitude + endLatLng!!.latitude) / 2,
-                (startLatLng!!.longitude + endLatLng!!.longitude) / 2
-            )
-
-            val markerOptions = MarkerOptions()
-                .position(midPoint)
-                .title("Precio: $price")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)) // Marcador rojo estándar
-                .snippet("Haz clic aquí para aumentar el precio")
-
-            mMap.addMarker(markerOptions)
-        }
-    }
-
 
     companion object {
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.paseosFragment,
                 R.id.veterinariaFragment,
                 R.id.guarderiaFragment,
-                R.id.requestDialogFragment
+                R.id.requestDialogFragment,
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
