@@ -93,6 +93,8 @@ class Login : AppCompatActivity() {
                         // Guarda el indicador de sesión iniciada en las preferencias compartidas
                         val editor = sharedPreferences.edit()
                         editor.putBoolean("is_logged_in", true)
+                        val role = if (usuario.services != null) "walker" else "user"
+                        editor.putString("user_role", role)
                         editor.apply()
 
                         val intent = Intent(this@Login, MainActivity::class.java)
@@ -124,6 +126,7 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
     private fun hideKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)

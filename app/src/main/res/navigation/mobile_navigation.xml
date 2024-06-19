@@ -5,6 +5,7 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <!-- Usuario -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.aplicationpaw.views.ui.home.HomeFragment"
@@ -31,6 +32,17 @@
         android:label="fragment_request_dialog"
         tools:layout="@layout/fragment_request_dialog" />
 
+    <!-- Paseador -->
+    <fragment
+        android:id="@+id/homePaseadorFragment"
+        android:name="com.example.aplicationpaw.views.ui.home_paseador.HomePaseadorFragment"
+        android:label="fragment_home_paseador"
+        tools:layout="@layout/fragment_home_paseador" />
+    <fragment
+        android:id="@+id/perfilPaseadorFragment"
+        android:name="com.example.aplicationpaw.views.ui.perfil_paseador.PerfilPaseadorFragment"
+        android:label="fragment_perfil_paseador"
+        tools:layout="@layout/fragment_perfil_paseador" />
 
 
 </navigation>
