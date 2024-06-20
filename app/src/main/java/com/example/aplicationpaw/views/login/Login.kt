@@ -6,14 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aplicationpaw.MainActivity
 import com.example.aplicationpaw.R
-import com.example.aplicationpaw.views.editar_perfil.EditarPerfil
 import com.example.aplicationpaw.views.register.Register
 import com.example.vfragment.modelos.CredencialesLogin
 import com.example.vfragment.modelos.UsuarioResponse
@@ -95,10 +92,20 @@ class Login : AppCompatActivity() {
                         editor.putBoolean("is_logged_in", true)
                         val role = if (usuario.services != null) "walker" else "user"
                         editor.putString("user_role", role)
+                        editor.putString("user_id", usuario.id)
+                        editor.putString("foto_perfil_url", usuario.imagen) // Guarda la URL de la imagen de perfil
+                        editor.putString("nombre_usuario", usuario.nombre) // Guarda el nombre de usuario
+                        editor.putString("telefono_usuario", usuario.telefono) // Guarda el teléfono del usuario
+                        editor.putString("ciudad_usuario", usuario.ciudad) // Guarda la ciudad del usuario
+                        editor.putString("correo_usuario", usuario.email) // Guarda el correo del usuario
                         editor.apply()
+
+
 
                         val intent = Intent(this@Login, MainActivity::class.java)
                         startActivity(intent)
+                        //mostrar el id del usuario
+                        Toast.makeText(this@Login, "ID del usuario: ${usuario.id}", Toast.LENGTH_SHORT).show()
                         finish()
 
                     } else {

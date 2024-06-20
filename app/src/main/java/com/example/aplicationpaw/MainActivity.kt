@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.requestDialogFragment, R.id.homePaseadorFragment
             )
         )
+        // Ocultar la flecha hacia atrás en la barra de acción
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -55,6 +58,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        val currentDestination = navController.currentDestination?.id
+        // Devuelve false cuando estás en el PerfilPaseadorFragment
+        return currentDestination != R.id.perfilPaseadorFragment && navController.navigateUp()
     }
+
 }

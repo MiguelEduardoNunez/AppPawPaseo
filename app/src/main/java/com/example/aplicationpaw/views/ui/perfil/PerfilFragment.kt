@@ -29,13 +29,13 @@ class PerfilFragment : Fragment() {
         sharedPreferences = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
         // Obtener el nombre de usuario de las preferencias compartidas
-        // val nombreUsuario = sharedPreferences.getString("nombre_usuario", "")
+        val nombreUsuario = sharedPreferences.getString("nombre_usuario", "")
 
         // Obtener una referencia al TextView donde se mostrará el nombre de usuario
         val textViewNombreUsuario = perfil.findViewById<TextView>(R.id.textViewNombreUsuario)
 
         // Establecer el nombre de usuario en el TextView
-        // textViewNombreUsuario.text = nombreUsuario
+        textViewNombreUsuario.text = nombreUsuario ?: "Usuario"
 
         // Obtener una referencia al botón de cerrar sesión
         val btnCerrarSesion = perfil.findViewById<Button>(R.id.btnCerrarSesion)

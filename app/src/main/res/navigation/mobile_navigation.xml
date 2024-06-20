@@ -36,12 +36,12 @@
     <fragment
         android:id="@+id/homePaseadorFragment"
         android:name="com.example.aplicationpaw.views.ui.home_paseador.HomePaseadorFragment"
-        android:label="fragment_home_paseador"
+        android:label="Home Paseador"
         tools:layout="@layout/fragment_home_paseador" />
     <fragment
         android:id="@+id/perfilPaseadorFragment"
         android:name="com.example.aplicationpaw.views.ui.perfil_paseador.PerfilPaseadorFragment"
-        android:label="fragment_perfil_paseador"
+        android:label="Perfil Paseador"
         tools:layout="@layout/fragment_perfil_paseador" />
 
 

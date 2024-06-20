@@ -58,7 +58,12 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.8.9")
     implementation ("com.google.maps:google-maps-services:0.14.0")
 
-
     implementation ("com.google.android.gms:play-services-maps:18.0.2")
     implementation ("com.google.android.gms:play-services-location:18.0.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+
+    //imagenes
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
 }

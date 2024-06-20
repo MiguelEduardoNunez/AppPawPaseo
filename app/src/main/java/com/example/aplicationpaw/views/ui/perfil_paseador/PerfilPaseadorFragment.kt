@@ -9,23 +9,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.TextView
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.views.login.Login
 
 class PerfilPaseadorFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val perfilPaseador = inflater.inflate(R.layout.fragment_perfil_paseador, container, false)
 
-        // Obtener una referencia al botón de cerrar sesión
-        val btnCerrarSesion = perfilPaseador.findViewById<Button>(R.id.btnCerrarSesion)
-
+        // Inicializar las preferencias compartidas
         sharedPreferences = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
+        // Obtener el nombre del paseador de las preferencias compartidas
+        val nombrePaseador = sharedPreferences.getString("nombre_usuario", "Miguel")
+
+        // Obtener una referencia al TextView donde se mostrará el nombre del paseador
+        val textViewNombrePaseador = perfilPaseador.findViewById<TextView>(R.id.textViewNombrePaseador)
+
+        // Establecer el nombre del paseador en el TextView
+        textViewNombrePaseador.text = nombrePaseador
+
+        // Obtener una referencia al botón de cerrar sesión
+        val btnCerrarSesion = perfilPaseador.findViewById<Button>(R.id.btnCerrarSesion)
 
         // Establecer un clic en el botón de cerrar sesión
         btnCerrarSesion.setOnClickListener {
@@ -33,6 +43,7 @@ class PerfilPaseadorFragment : Fragment() {
             sharedPreferences.edit().putBoolean("is_logged_in", false).apply()
             // Vaciar cualquier otro dato de sesión guardado
             sharedPreferences.edit().remove("user_role").apply()
+            sharedPreferences.edit().remove("nombre_usuario").apply()
 
             // Redirigir al usuario a la pantalla de inicio de sesión
             val intent = Intent(requireContext(), Login::class.java)
@@ -40,19 +51,6 @@ class PerfilPaseadorFragment : Fragment() {
             requireActivity().finish() // Finalizar la actividad actual
         }
 
-        // Obtener una referencia al LinearLayout para editar perfil
-        //val btnEditarPerfil = perfilPaseador.findViewById<LinearLayout>(R.id.btnEditarPerfil)
-
-        // Establecer un clic en el LinearLayout de editar perfil
-        //btnEditarPerfil.setOnClickListener {
-            // Redirigir al usuario a la pantalla de editar perfil de paseador
-            //val intent = Intent(requireContext(), EditarPerfilPaseador::class.java)
-            //startActivity(intent)
-        //}
-
-
         return perfilPaseador
     }
-
-
 }
