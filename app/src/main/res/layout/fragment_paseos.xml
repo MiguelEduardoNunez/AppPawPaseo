@@ -4,46 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/azul"
     tools:context=".views.ui.paseos.PaseosFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
-
-        <Button
-            android:id="@+id/ubicacion1"
-            android:layout_width="360dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/piel"
-            android:text="@string/tu_ubicacion"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/editPersonalizacion"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.375" />
-
         <Button
             android:id="@+id/editPersonalizacion"
             android:layout_width="360dp"
             android:layout_height="50dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/piel"
             android:text="@string/marca_la_ruta_de_tu_paseo"
+            android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnBuscarMenu1"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ubicacion1"  />
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <EditText
+            android:id="@+id/inputPrecio"
+            android:layout_width="360dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bordes_dialogos"
+            android:backgroundTint="@color/white"
+            android:hint="PRECIO"
+            android:inputType="numberDecimal"
+            android:paddingStart="12dp"
+            android:textColorHint="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btnBuscarPaseo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editPersonalizacion" />
 
         <Button
-            android:id="@+id/btnBuscarMenu1"
-            android:layout_width="130dp"
+            android:id="@+id/btnLimpiarMapa"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/amarillo"
+            android:text="LIMPIAR"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnBuscarPaseo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.5" />
+
+        <Button
+            android:id="@+id/btnBuscarPaseo"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/amarillo"
@@ -51,8 +67,8 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/btnLimpiarMapa"
+            app:layout_constraintWidth_percent="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

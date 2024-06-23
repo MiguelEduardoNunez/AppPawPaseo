@@ -2,7 +2,6 @@ package com.example.aplicationpaw
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_home, R.id.bibliotecaFragment, R.id.perfilFragment,
                 R.id.paseosFragment, R.id.veterinariaFragment, R.id.guarderiaFragment,
-                R.id.requestDialogFragment, R.id.homePaseadorFragment
+                R.id.homePaseadorFragment
             )
         )
         // Ocultar la flecha hacia atrás en la barra de acción

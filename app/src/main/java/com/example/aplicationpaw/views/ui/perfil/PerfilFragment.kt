@@ -15,6 +15,7 @@ import com.example.aplicationpaw.R
 import com.example.aplicationpaw.views.editar_mascotas.EditarMascotas
 import com.example.aplicationpaw.views.editar_perfil.EditarPerfil
 import com.example.aplicationpaw.views.login.Login
+import com.example.aplicationpaw.views.mascotas.MascotasFragment
 
 class PerfilFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -67,7 +68,7 @@ class PerfilFragment : Fragment() {
         val btnMostrarMascota = perfil.findViewById<LinearLayout>(R.id.btnMisMascotas)
 
         btnMostrarMascota.setOnClickListener {
-            val intent = Intent(requireContext(), EditarMascotas::class.java)
+            val intent = Intent(requireContext(), MascotasFragment::class.java)
             startActivity(intent)
         }
 

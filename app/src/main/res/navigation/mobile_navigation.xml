@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+         <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
@@ -26,11 +26,6 @@
         android:name="com.example.aplicationpaw.views.ui.mapa.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
-    <dialog
-        android:id="@+id/requestDialogFragment"
-        android:name="com.example.aplicationpaw.views.ui.dialogo.RequestDialogFragment"
-        android:label="fragment_request_dialog"
-        tools:layout="@layout/fragment_request_dialog" />
 
     <!-- Paseador -->
     <fragment
@@ -43,6 +38,10 @@
         android:name="com.example.aplicationpaw.views.ui.perfil_paseador.PerfilPaseadorFragment"
         android:label="Perfil Paseador"
         tools:layout="@layout/fragment_perfil_paseador" />
-
+    <fragment
+        android:id="@+id/paseosFragment3"
+        android:name="com.example.aplicationpaw.views.ui.paseos.PaseosFragment"
+        android:label="fragment_paseos"
+        tools:layout="@layout/fragment_paseos" />
 
 </navigation>
