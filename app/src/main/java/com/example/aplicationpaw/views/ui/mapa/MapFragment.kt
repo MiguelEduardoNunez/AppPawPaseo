@@ -212,6 +212,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
             precio = precio,
             user = userId
         )
+        //mostrar los datos en un log
+        Log.d("MapFragment", "Longitud: ${request.longitud}, Latitud: ${request.latitud}, Precio: ${request.precio}, Usuario: ${request.user}")
 
         val call = requestService.crearPeticion(request)
         call.enqueue(object : Callback<RespuestaServidor> {

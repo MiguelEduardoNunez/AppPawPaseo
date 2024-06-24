@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.views.editar_mascotas.EditarMascotas
 import com.example.aplicationpaw.views.editar_perfil.EditarPerfil
@@ -66,10 +67,8 @@ class PerfilFragment : Fragment() {
         }
 
         val btnMostrarMascota = perfil.findViewById<LinearLayout>(R.id.btnMisMascotas)
-
         btnMostrarMascota.setOnClickListener {
-            val intent = Intent(requireContext(), MascotasFragment::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.mascotasFragment)
         }
 
         return perfil

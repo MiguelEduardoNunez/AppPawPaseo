@@ -10,11 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/azul" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMascotas"
             android:layout_width="match_parent"
