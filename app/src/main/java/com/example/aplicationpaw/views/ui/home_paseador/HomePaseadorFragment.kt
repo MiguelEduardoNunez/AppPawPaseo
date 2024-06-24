@@ -22,7 +22,7 @@ import com.google.firebase.database.database
 import com.google.gson.Gson
 import java.util.HashMap
 
-class HomePaseadorFragment : Fragment() {
+class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HomePaseadorAdapter
@@ -36,7 +36,7 @@ class HomePaseadorFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home_paseador, container, false)
         recyclerView = view.findViewById(R.id.recyclerViewPaseadores)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = HomePaseadorAdapter(paseadores)
+        adapter = HomePaseadorAdapter(paseadores, this)
         recyclerView.adapter = adapter
         return view;
     }
@@ -74,6 +74,11 @@ class HomePaseadorFragment : Fragment() {
             }
         }
         database.addValueEventListener(postListener)
+    }
+
+    override fun click(paseador: Paseador) {
+        //click de la carta
+        Toast.makeText(context, paseador.valor, Toast.LENGTH_LONG).show();
     }
 
 }
