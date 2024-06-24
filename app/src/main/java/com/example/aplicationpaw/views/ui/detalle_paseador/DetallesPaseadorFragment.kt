@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.aplicationpaw.R
@@ -24,6 +26,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.firebase.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 import com.google.maps.model.TravelMode
@@ -39,6 +44,7 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
     private var startLatLng: LatLng? = null
     private var endLatLng: LatLng? = null
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var database: DatabaseReference
 
     interface OnRouteDrawnListener {
         fun onRouteDrawn(startLatLng: LatLng, endLatLng: LatLng)
@@ -56,6 +62,9 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //firebase guardar datos
+        database = Firebase.database.reference;
+
         sharedPreferences =
             requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
@@ -63,7 +72,11 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapa) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        //iniciar logica
+        initLogid(view);
+    }
 
+    fun initLogid(view: View) {
         val latitudInicial = getArguments()?.getDouble("latitudInicial") ?: 0.0;
         val longitudInicial = getArguments()?.getDouble("longitudInicial") ?: 0.0;
         val latitudFinal = getArguments()?.getDouble("latitudFinal") ?: 0.0;
@@ -71,8 +84,32 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
         val user = getArguments()?.getString("user") ?: "";
         val precio = getArguments()?.getString("precio") ?: "";
 
+        val precioFinal = getString(R.string.aceptar_por_cop_valor).replace("COP", precio);
+
         startLatLng = LatLng(latitudInicial, longitudInicial);
         endLatLng = LatLng(latitudFinal, longitudFinal);
+        view.findViewById<TextView>(R.id.nick_usuario).text = user;
+
+        val btnAcept = view.findViewById<Button>(R.id.btn_valor);
+        val btn500 = view.findViewById<Button>(R.id.btn_valor500);
+        val btn1000 = view.findViewById<Button>(R.id.btn_valor1000);
+        val btnOmitir = view.findViewById<TextView>(R.id.btn_omitir);
+
+        btnAcept.text = precioFinal;
+        btnAcept.setOnClickListener(View.OnClickListener {
+            database.child(user).child("status").setValue("ACEPTADO")
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
+
+                    btnAcept.isEnabled = false;
+                    btn500.isEnabled = false;
+                    btn1000.isEnabled = false;
+                    btnOmitir.isEnabled = false;
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                }
+        });
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

@@ -57,7 +57,10 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
                     for (data in datas) {
                         val json = Gson().toJson(data.value)
                         val peticionPaseo = gson.fromJson(json, PeticionPaseo::class.java)
-                        peticionesPaseos.add(peticionPaseo)
+
+                        if(peticionPaseo.status.equals("NUEVO")){
+                            peticionesPaseos.add(peticionPaseo)
+                        }
                     }
 
                     adapter.notifyDataSetChanged();

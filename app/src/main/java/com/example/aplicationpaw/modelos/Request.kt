@@ -18,7 +18,8 @@ data class PeticionPaseo(
     val longitudFinal: Double,
     val latitudFinal: Double,
     val precio: String,
-    val user: String
+    val user: String,
+    val status: String
 )
 
 data class RespuestaServidor(

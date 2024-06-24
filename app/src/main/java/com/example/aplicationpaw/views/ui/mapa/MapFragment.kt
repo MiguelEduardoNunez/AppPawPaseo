@@ -237,7 +237,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                         endLatLng?.longitude ?: 0.0,
                         endLatLng?.latitude ?: 0.0,
                         request.precio,
-                        usuario_nombre
+                        usuario_nombre,
+                        "NUEVO"
                     );
                     database.child(usuario_nombre).setValue(newElement)
                         .addOnSuccessListener {

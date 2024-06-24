@@ -45,6 +45,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/nick_usuario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/nick_del_usuario"
@@ -214,6 +215,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/btn_omitir"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
