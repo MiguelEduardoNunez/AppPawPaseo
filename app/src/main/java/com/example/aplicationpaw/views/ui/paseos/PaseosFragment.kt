@@ -12,8 +12,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.aplicationpaw.R
+import com.example.aplicationpaw.modelos.CrearPeticionRequest
 import com.example.aplicationpaw.views.ui.mapa.MapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
+import java.util.Date
 
 class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
 
@@ -25,6 +30,8 @@ class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
 
     private var startLatLng: LatLng? = null
     private var endLatLng: LatLng? = null
+
+    private lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,8 +53,9 @@ class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
 
         // Configurar botón de buscar
         buscarButton.setOnClickListener {
-            val precio = priceEditText.text.toString()
+            var precio = priceEditText.text.toString()
             val usuario = sharedPreferences.getString("user_id", "") ?: ""
+            val usuario_nombre = sharedPreferences.getString("nombre_usuario", null) ?: ""
 
             if (startLatLng != null && endLatLng != null && precio.isNotEmpty() && usuario.isNotEmpty()) {
                 createRequest(startLatLng!!.longitude.toString(), startLatLng!!.latitude.toString(), precio, usuario)
@@ -58,6 +66,18 @@ class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
                 Log.d("PaseosFragment", "Precio: $precio")
                 Log.d("PaseosFragment", "Usuario: $usuario")
                 Toast.makeText(context, "Faltan datos para crear la petición", Toast.LENGTH_SHORT).show()
+
+
+                //firebase guardar datos
+                database = Firebase.database.reference;
+                val newElement = CrearPeticionRequest(12.0, 12.0, "12.0".toDouble(), "Descripcion", "Correcto", null, usuario_nombre,"");
+                database.child(usuario_nombre).setValue(newElement)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                    }
             }
         }
 

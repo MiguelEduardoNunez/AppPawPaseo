@@ -13,7 +13,7 @@ data class CrearPeticionRequest(
     val precio: Double,
     val descripcion: String,
     val estado: String,
-    val date: Date,
+    val date: Date?,
     val user: String,
     val paseador: String?
 )
