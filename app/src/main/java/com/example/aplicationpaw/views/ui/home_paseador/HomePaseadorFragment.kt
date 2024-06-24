@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicationpaw.R
@@ -20,7 +21,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.gson.Gson
 import java.util.HashMap
-import java.util.function.Consumer
 
 class HomePaseadorFragment : Fragment() {
 
@@ -50,17 +50,21 @@ class HomePaseadorFragment : Fragment() {
         database = Firebase.database.reference;
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val datas = dataSnapshot.getValue() as HashMap<*, *>
-                val gson = Gson()
+                if(dataSnapshot.getValue() != null) {
+                    val datas = dataSnapshot.getValue() as HashMap<*, *>
+                    val gson = Gson()
 
-                paseadores.clear();
-                for (data in datas) {
-                    val json = Gson().toJson(data.value)
-                    val paseador = gson.fromJson(json, CrearPeticionRequest::class.java)
-                    paseadores.add(Paseador(paseador.user, paseador.precio))
+                    paseadores.clear();
+                    for (data in datas) {
+                        val json = Gson().toJson(data.value)
+                        val paseador = gson.fromJson(json, CrearPeticionRequest::class.java)
+                        paseadores.add(Paseador(paseador.user, paseador.precio))
+                    }
+
+                    adapter.notifyDataSetChanged();
+                }else{
+                    Toast.makeText(context, "No se encuentran registros", Toast.LENGTH_LONG).show();
                 }
-
-                adapter.notifyDataSetChanged();
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

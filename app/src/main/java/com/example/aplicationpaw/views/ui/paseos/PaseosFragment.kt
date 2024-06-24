@@ -71,7 +71,7 @@ class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
                 //firebase guardar datos
                 database = Firebase.database.reference;
                 val newElement = CrearPeticionRequest(12.0, 12.0, "12.0".toDouble(), "Descripcion", "Correcto", null, usuario_nombre,"");
-                database.child(usuario_nombre).setValue(newElement)
+                database.child(usuario_nombre + Date().time.toString()).setValue(newElement)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
                     }
