@@ -49,6 +49,10 @@
         android:name="com.example.aplicationpaw.views.ui.paseos.PaseosFragment"
         android:label="fragment_paseos"
         tools:layout="@layout/fragment_paseos" />
-
+    <fragment
+        android:id="@+id/detallePaseadorFragment"
+        android:name="com.example.aplicationpaw.views.ui.detalle_paseador.detalles_paseador"
+        android:label="Detalle Paseo"
+        tools:layout="@layout/fragment_detalles_paseador" />
 
 </navigation>

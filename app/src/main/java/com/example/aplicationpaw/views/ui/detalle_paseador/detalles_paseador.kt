@@ -11,6 +11,15 @@ import com.example.aplicationpaw.R
 import com.example.aplicationpaw.views.ui.mapa.MapFragment
 
 class detalles_paseador : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_detalles_paseador, container, false)
+        return view;
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

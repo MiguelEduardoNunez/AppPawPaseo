@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.modelos.CrearPeticionRequest
 import com.example.aplicationpaw.modelos.Paseador
-import com.example.aplicationpaw.views.ui.detalle_paseador.detalles_paseador
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -79,10 +79,8 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
 
     override fun click(paseador: Paseador) {
         //click de la carta
-        Toast.makeText(context, paseador.valor, Toast.LENGTH_LONG).show();
         //remplaza el fragmento por el detalle del paseador
-
-
+        findNavController().navigate(R.id.detallePaseadorFragment);
     }
 
 }

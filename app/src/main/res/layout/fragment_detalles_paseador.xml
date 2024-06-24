@@ -10,17 +10,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="370dp"
-            android:layout_height="285dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="20dp"
-            app:cardElevation="12dp">
+            app:cardElevation="12dp"
+            android:layout_margin="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,9 +34,10 @@
 
                     <ImageView
                         android:id="@+id/iv_user_icon"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/foto_perfil" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/foto_perfil"
+                        android:layout_marginEnd="15dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nick del Usuario"
+                            android:text="@string/nick_del_usuario"
                             android:textColor="@android:color/black"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -55,7 +55,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N° de Servicios Completados"
+                            android:text="@string/n_de_servicios_completados"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="14sp" />
 
@@ -85,48 +85,82 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:weightSum="3">
+                            android:weightSum="3"
+                            android:layout_marginEnd="30dp">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="20dp"
-                                android:text="Genero"
-                                android:textAlignment="center"
+                                android:text="@string/genero"
                                 android:textColor="@android:color/black"
                                 android:textSize="15dp" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="20dp"
-                                android:text="Raza"
-                                android:textAlignment="center"
+                                android:text="@string/raza"
                                 android:textColor="@android:color/black"
                                 android:textSize="15sp" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="20dp"
-                                android:text="Tamaño"
-                                android:textAlignment="center"
+                                android:text="@string/tama_o"
                                 android:textColor="@android:color/black"
                                 android:textSize="15sp" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="20dp"
-                                android:text="Desafios"
-                                android:textAlignment="center"
+                                android:text="@string/desafios"
                                 android:textColor="@android:color/black"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="150dp"
-                            android:layout_height="0dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="3"
+                            android:layout_marginEnd="30dp">
+
+                            <TextView
+                                android:id="@+id/mascota_genero"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:text="@string/genero"
+                                android:textColor="@android:color/black"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/mascota_raza"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:text="@string/raza"
+                                android:textColor="@android:color/black"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/mascota_tamano"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:text="@string/tama_o"
+                                android:textColor="@android:color/black"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/mascota_desafio"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:text="@string/desafios"
+                                android:textColor="@android:color/black"
+                                android:textSize="15sp" />
+                        </LinearLayout>
 
                         <ImageView
                             android:id="@+id/iv_emoji_icon"
-                            android:layout_width="100dp"
+                            android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:src="@drawable/perro1" />
 
@@ -141,12 +175,11 @@
 
                     <Button
                         android:id="@+id/btn_valor"
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:backgroundTint="@color/amarillo"
-                        android:text="Aceptar por COP VALOR" />
+                        android:text="@string/aceptar_por_cop_valor" />
 
                 </LinearLayout>
 
@@ -165,26 +198,26 @@
 
                     <Button
                         android:id="@+id/btn_valor500"
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:backgroundTint="@color/azulClaro"
-                        android:text="+500" />
+                        android:text="@string/_500" />
 
                     <Button
                         android:id="@+id/btn_valor1000"
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:backgroundTint="@color/azulClaro"
-                        android:text="+1000" />
+                        android:text="@string/_1000" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="OMITIR"
+                    android:text="@string/omitir"
                     android:textColor="@color/azul"
                     android:textSize="15sp"
                     android:textStyle="bold" />
