@@ -42,6 +42,8 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
@@ -82,6 +84,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
             price = it.getString("PRICE")
             userId = it.getString("USER_ID")
         }
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://pawpaseo-backend-phi.vercel.app/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        requestService = retrofit.create(ApiService::class.java)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -172,8 +181,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
 
         builder.setPositiveButton("OK") { dialog, which ->
             val price = input.text.toString()
-            if (price.isNotEmpty()) {
-                createRequest()
+            if (price != "") {
+                createRequest(price)
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -186,7 +195,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
         builder.show()
     }
 
-    private fun createRequest() {
+    private fun createRequest(precio : String) {
         val userId = sharedPreferences.getString("user_id", "") ?: ""
         if (userId.isEmpty()) {
             Toast.makeText(
@@ -200,7 +209,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
         val request = CrearPeticionRequest(
             longitud = endLatLng?.longitude ?: 0.0,
             latitud = endLatLng?.latitude ?: 0.0,
-            precio = price ?: "",
+            precio = precio,
             user = userId
         )
 
