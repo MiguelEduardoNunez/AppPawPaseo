@@ -8,12 +8,12 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicationpaw.R
-import com.example.aplicationpaw.modelos.Paseador
+import com.example.aplicationpaw.modelos.PeticionPaseo
 
-class HomePaseadorAdapter(private val paseadores: List<Paseador>, private val onClickItem: OnClickItem ) : RecyclerView.Adapter<HomePaseadorAdapter.HomePaseadorViewHolder>() {
+class HomePaseadorAdapter(private val peticionesPaseos: List<PeticionPaseo>, private val onClickItem: OnClickItem ) : RecyclerView.Adapter<HomePaseadorAdapter.HomePaseadorViewHolder>() {
 
     interface OnClickItem {
-        fun click(paseador: Paseador);
+        fun click(peticionPaseo: PeticionPaseo);
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePaseadorViewHolder {
@@ -22,18 +22,18 @@ class HomePaseadorAdapter(private val paseadores: List<Paseador>, private val on
     }
 
     override fun onBindViewHolder(holder: HomePaseadorViewHolder, position: Int) {
-        val paseador = paseadores[position];
-        holder.usuario.text = paseador.usuario;
-        holder.valor.text = paseador.valor;
+        val peticionPaseo = peticionesPaseos[position];
+        holder.usuario.text = peticionPaseo.user;
+        holder.valor.text = peticionPaseo.precio;
 
         //click
         holder.card.setOnClickListener(View.OnClickListener {
-            onClickItem.click(paseador);
+            onClickItem.click(peticionPaseo);
         });
     }
 
     override fun getItemCount(): Int {
-        return paseadores.size;
+        return peticionesPaseos.size;
     }
 
     class HomePaseadorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

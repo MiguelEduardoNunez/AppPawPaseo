@@ -3,17 +3,16 @@ package com.example.aplicationpaw.views.ui.home_paseador
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicationpaw.R
-import com.example.aplicationpaw.modelos.CrearPeticionRequest
-import com.example.aplicationpaw.modelos.Paseador
+import com.example.aplicationpaw.modelos.PeticionPaseo
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,13 +20,12 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.gson.Gson
-import java.util.HashMap
 
 class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HomePaseadorAdapter
-    private val paseadores = mutableListOf<Paseador>()
+    private val peticionesPaseos = mutableListOf<PeticionPaseo>()
     private lateinit var database: DatabaseReference
 
     override fun onCreateView(
@@ -37,7 +35,7 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
         val view = inflater.inflate(R.layout.fragment_home_paseador, container, false)
         recyclerView = view.findViewById(R.id.recyclerViewPaseadores)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = HomePaseadorAdapter(paseadores, this)
+        adapter = HomePaseadorAdapter(peticionesPaseos, this)
         recyclerView.adapter = adapter
         return view;
     }
@@ -55,11 +53,11 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
                     val datas = dataSnapshot.getValue() as HashMap<*, *>
                     val gson = Gson()
 
-                    paseadores.clear();
+                    peticionesPaseos.clear();
                     for (data in datas) {
                         val json = Gson().toJson(data.value)
-                        val paseador = gson.fromJson(json, CrearPeticionRequest::class.java)
-                        paseadores.add(Paseador(paseador.user, paseador.precio))
+                        val peticionPaseo = gson.fromJson(json, PeticionPaseo::class.java)
+                        peticionesPaseos.add(peticionPaseo)
                     }
 
                     adapter.notifyDataSetChanged();
@@ -77,10 +75,17 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
         database.addValueEventListener(postListener)
     }
 
-    override fun click(paseador: Paseador) {
+    override fun click(peticionPaseo: PeticionPaseo) {
         //click de la carta
         //remplaza el fragmento por el detalle del paseador
-        findNavController().navigate(R.id.detallePaseadorFragment);
+        val bundle = Bundle();
+        bundle.putDouble("latitudInicial", peticionPaseo.latitudInicial);
+        bundle.putDouble("longitudInicial", peticionPaseo.longitudInicial);
+        bundle.putDouble("latitudFinal", peticionPaseo.latitudFinal);
+        bundle.putDouble("longitudFinal", peticionPaseo.longitudFinal);
+        bundle.putString("user", peticionPaseo.user);
+        bundle.putString("precio", peticionPaseo.precio);
+        findNavController().navigate(R.id.detallePaseadorFragment, bundle);
     }
 
 }

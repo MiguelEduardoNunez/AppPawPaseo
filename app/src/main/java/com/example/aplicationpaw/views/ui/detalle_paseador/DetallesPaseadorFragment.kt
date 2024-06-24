@@ -6,18 +6,14 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.example.aplicationpaw.R
-import com.example.aplicationpaw.views.ui.mapa.MapFragment
-import com.example.vfragment.networking.ApiService
+import com.example.aplicationpaw.modelos.PeticionPaseo
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,7 +24,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.firebase.database.DatabaseReference
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 import com.google.maps.model.TravelMode
@@ -36,20 +31,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class detalles_paseador : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
+class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var startLatLng: LatLng? = null
     private var endLatLng: LatLng? = null
-    private var price: String? = null
-    private var userId: String? = null
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var requestService: ApiService
-    private lateinit var database: DatabaseReference
 
     interface OnRouteDrawnListener {
         fun onRouteDrawn(startLatLng: LatLng, endLatLng: LatLng)
@@ -62,11 +51,6 @@ class detalles_paseador : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickLi
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detalles_paseador, container, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
-
-        //dos
-        startLatLng = LatLng(2.479011893246359, -76.56147066503763);
-        endLatLng = LatLng(2.4813750505358234, -76.56572666019201);
-
         return view;
     }
 
@@ -78,21 +62,17 @@ class detalles_paseador : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickLi
         // Inicializar el mapa
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapa) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        arguments?.let {
-            price = it.getString("PRICE")
-            userId = it.getString("USER_ID")
-        }
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
 
-            // Agregar MapFragment al contenedor
-            childFragmentManager.commit {
-                replace<MapFragment>(R.id.map_fragment_container)
-            }
-        }
+        val latitudInicial = getArguments()?.getDouble("latitudInicial") ?: 0.0;
+        val longitudInicial = getArguments()?.getDouble("longitudInicial") ?: 0.0;
+        val latitudFinal = getArguments()?.getDouble("latitudFinal") ?: 0.0;
+        val longitudFinal = getArguments()?.getDouble("longitudFinal") ?: 0.0;
+        val user = getArguments()?.getString("user") ?: "";
+        val precio = getArguments()?.getString("precio") ?: "";
+
+        startLatLng = LatLng(latitudInicial, longitudInicial);
+        endLatLng = LatLng(latitudFinal, longitudFinal);
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -118,10 +98,8 @@ class detalles_paseador : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickLi
                 PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
             )
         }
-
         val defaultLocation = LatLng(2.43823, -76.61316)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12f));
-
 
 
         //agregar marcadore y ruta
@@ -137,7 +115,7 @@ class detalles_paseador : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickLi
         drawRoute(startLatLng, endLatLng);
     }
 
-    fun drawRoute(startLatLng: LatLng?, endLatLng: LatLng?) {
+    private fun drawRoute(startLatLng: LatLng?, endLatLng: LatLng?) {
         if (startLatLng == null || endLatLng == null) {
             Toast.makeText(
                 requireContext(),
@@ -146,17 +124,10 @@ class detalles_paseador : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickLi
             ).show()
             return
         }
-
         // Dibujar la ruta en el mapa
         CoroutineScope(Dispatchers.IO).launch {
             requestDirections(startLatLng, endLatLng)
         }
-
-        // Mostrar la longitud y latitud en el Log
-        Log.d(
-            "MapFragment",
-            "Latitud: ${startLatLng?.latitude}, Longitud: ${endLatLng?.longitude}"
-        )
     }
 
     private suspend fun requestDirections(startLatLng: LatLng, endLatLng: LatLng) {

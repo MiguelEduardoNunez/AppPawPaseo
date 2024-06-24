@@ -51,7 +51,7 @@
         tools:layout="@layout/fragment_paseos" />
     <fragment
         android:id="@+id/detallePaseadorFragment"
-        android:name="com.example.aplicationpaw.views.ui.detalle_paseador.detalles_paseador"
+        android:name="com.example.aplicationpaw.views.ui.detalle_paseador.DetallesPaseadorFragment"
         android:label="Detalle Paseo"
         tools:layout="@layout/fragment_detalles_paseador" />
 

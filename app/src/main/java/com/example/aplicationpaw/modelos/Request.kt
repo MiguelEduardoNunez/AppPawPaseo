@@ -1,7 +1,5 @@
 package com.example.aplicationpaw.modelos
 
-import java.util.Date
-
 data class Coordenada(
     val latitud: Double,
     val longitud: Double
@@ -10,6 +8,15 @@ data class Coordenada(
 data class CrearPeticionRequest(
     val longitud: Double,
     val latitud: Double,
+    val precio: String,
+    val user: String
+)
+
+data class PeticionPaseo(
+    val longitudInicial: Double,
+    val latitudInicial: Double,
+    val longitudFinal: Double,
+    val latitudFinal: Double,
     val precio: String,
     val user: String
 )

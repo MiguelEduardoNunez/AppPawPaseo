@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.modelos.CrearPeticionRequest
+import com.example.aplicationpaw.modelos.PeticionPaseo
 import com.example.aplicationpaw.modelos.RespuestaServidor
 import com.example.vfragment.networking.ApiService
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -212,8 +213,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
             precio = precio,
             user = userId
         )
-        //mostrar los datos en un log
-        Log.d("MapFragment", "Longitud: ${request.longitud}, Latitud: ${request.latitud}, Precio: ${request.precio}, Usuario: ${request.user}")
 
         val call = requestService.crearPeticion(request)
         call.enqueue(object : Callback<RespuestaServidor> {
@@ -227,12 +226,16 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                         "Petición creada exitosamente",
                         Toast.LENGTH_SHORT
                     ).show()
+
                     //firebase guardar datos
-                    val usuario_nombre = sharedPreferences.getString("nombre_usuario", null) ?: ""
                     database = Firebase.database.reference;
-                    val newElement = CrearPeticionRequest(
-                        request.longitud,
-                        request.latitud,
+                    val usuario_nombre = sharedPreferences.getString("nombre_usuario", null) ?: ""
+
+                    val newElement = PeticionPaseo(
+                        startLatLng?.longitude ?: 0.0,
+                        startLatLng?.latitude ?: 0.0,
+                        endLatLng?.longitude ?: 0.0,
+                        endLatLng?.latitude ?: 0.0,
                         request.precio,
                         usuario_nombre
                     );
