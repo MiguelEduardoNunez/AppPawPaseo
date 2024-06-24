@@ -20,7 +20,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.gson.Gson
 import java.util.HashMap
-import java.util.function.Consumer
 
 class HomePaseadorFragment : Fragment() {
 

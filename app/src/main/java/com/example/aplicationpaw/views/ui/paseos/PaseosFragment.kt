@@ -22,16 +22,11 @@ import java.util.Date
 
 class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
 
-    private lateinit var sharedPreferences: SharedPreferences
-
-    private lateinit var priceEditText: EditText
-    private lateinit var buscarButton: Button
     private var mapFragment: MapFragment? = null
 
     private var startLatLng: LatLng? = null
     private var endLatLng: LatLng? = null
 
-    private lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,47 +34,6 @@ class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_paseos, container, false)
 
-        priceEditText = rootView.findViewById(R.id.inputPrecio)
-        buscarButton = rootView.findViewById(R.id.btnBuscarPaseo)
-
-        // Inicializar SharedPreferences
-        sharedPreferences = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
-
-        // Obtener instancia de MapFragment
-        mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment_container) as? MapFragment
-
-        // Establecer este fragmento como listener para la ruta dibujada
-        mapFragment?.routeListener = this
-
-        // Configurar botón de buscar
-        buscarButton.setOnClickListener {
-            var precio = priceEditText.text.toString()
-            val usuario = sharedPreferences.getString("user_id", "") ?: ""
-            val usuario_nombre = sharedPreferences.getString("nombre_usuario", null) ?: ""
-
-            if (startLatLng != null && endLatLng != null && precio.isNotEmpty() && usuario.isNotEmpty()) {
-                createRequest(startLatLng!!.longitude.toString(), startLatLng!!.latitude.toString(), precio, usuario)
-            } else {
-                //mostrar la longitud y latitud en el Log
-                Log.d("PaseosFragment", "Longitud: ${startLatLng?.longitude}")
-                Log.d("PaseosFragment", "Latitud: ${startLatLng?.latitude}")
-                Log.d("PaseosFragment", "Precio: $precio")
-                Log.d("PaseosFragment", "Usuario: $usuario")
-                Toast.makeText(context, "Faltan datos para crear la petición", Toast.LENGTH_SHORT).show()
-
-
-                //firebase guardar datos
-                database = Firebase.database.reference;
-                val newElement = CrearPeticionRequest(12.0, 12.0, "12.0".toDouble(), "Descripcion", "Correcto", null, usuario_nombre,"");
-                database.child(usuario_nombre).setValue(newElement)
-                    .addOnSuccessListener {
-                        Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
-                    }
-            }
-        }
 
         // Configurar botón de marcar ruta
         val btnMarcarRuta = rootView.findViewById<Button>(R.id.editPersonalizacion)
@@ -94,16 +48,7 @@ class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
         return rootView
     }
 
-    private fun createRequest(longitud: String, latitud: String, precio: String, usuario: String) {
-        // Aquí deberías implementar la lógica para enviar la solicitud usando Retrofit o tu método actual
-        // Para simplificar el ejemplo, se imprime la información en el Log
-        Log.d("PaseosFragment", "Longitud: $longitud")
-        Log.d("PaseosFragment", "Latitud: $latitud")
-        Log.d("PaseosFragment", "Precio: $precio")
-        Log.d("PaseosFragment", "Usuario: $usuario")
 
-        Toast.makeText(context, "Petición creada exitosamente", Toast.LENGTH_SHORT).show()
-    }
     override fun onRouteDrawn(startLatLng: LatLng, endLatLng: LatLng) {
         this.startLatLng = startLatLng
         this.endLatLng = endLatLng

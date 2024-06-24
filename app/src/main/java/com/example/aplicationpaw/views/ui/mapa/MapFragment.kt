@@ -1,6 +1,9 @@
 package com.example.aplicationpaw.views.ui.mapa
 
 import android.Manifest
+import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
@@ -8,10 +11,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.aplicationpaw.R
+import com.example.aplicationpaw.modelos.CrearPeticionRequest
+import com.example.aplicationpaw.modelos.RespuestaServidor
+import com.example.vfragment.networking.ApiService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,6 +29,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.firebase.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 import com.google.maps.model.TravelMode
@@ -29,6 +39,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
@@ -39,6 +52,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
     private var endLatLng: LatLng? = null
     private var price: String? = null
     private var userId: String? = null
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var requestService: ApiService
+    private lateinit var database: DatabaseReference
+
     interface OnRouteDrawnListener {
         fun onRouteDrawn(startLatLng: LatLng, endLatLng: LatLng)
     }
@@ -56,6 +73,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
         // Inicializar el mapa
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapa) as SupportMapFragment
@@ -138,7 +156,96 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
             Toast.makeText(requireContext(), "Punto de destino seleccionado", Toast.LENGTH_SHORT)
                 .show()
             drawRoute(startLatLng, endLatLng)  // Llamar a drawRoute aquí
+            showPriceDialog()
         }
+    }
+    //inicializar lateinit var sharedPreferences
+
+
+    private fun showPriceDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        val inflater = requireActivity().layoutInflater
+        val dialogView = inflater.inflate(R.layout.activity_dialog_price, null)
+        builder.setView(dialogView)
+
+        val input = dialogView.findViewById<EditText>(R.id.inputPrice)
+
+        builder.setPositiveButton("OK") { dialog, which ->
+            val price = input.text.toString()
+            if (price.isNotEmpty()) {
+                createRequest()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "El precio no puede estar vacío",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        builder.setNegativeButton("Cancelar") { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun createRequest() {
+        val userId = sharedPreferences.getString("user_id", "") ?: ""
+        if (userId.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                "Error: ID de usuario no encontrado",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val request = CrearPeticionRequest(
+            longitud = endLatLng?.longitude ?: 0.0,
+            latitud = endLatLng?.latitude ?: 0.0,
+            precio = price ?: "",
+            user = userId
+        )
+
+        val call = requestService.crearPeticion(request)
+        call.enqueue(object : Callback<RespuestaServidor> {
+            override fun onResponse(
+                call: Call<RespuestaServidor>,
+                response: Response<RespuestaServidor>
+            ) {
+                if (response.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Petición creada exitosamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    //firebase guardar datos
+                    val usuario_nombre = sharedPreferences.getString("nombre_usuario", null) ?: ""
+                    database = Firebase.database.reference;
+                    val newElement = CrearPeticionRequest(
+                        request.longitud,
+                        request.latitud,
+                        request.precio,
+                        usuario_nombre
+                    );
+                    database.child(usuario_nombre).setValue(newElement)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                        }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error al crear la petición: ${response.code()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(call: Call<RespuestaServidor>, t: Throwable) {
+                Toast.makeText(requireContext(), "Error de red: ${t.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
     }
 
     fun drawRoute(startLatLng: LatLng?, endLatLng: LatLng?) {
@@ -196,12 +303,17 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                     // Notificar al listener (PaseosFragment) que la ruta ha sido dibujada
                     routeListener?.onRouteDrawn(startLatLng, endLatLng)
                 } else {
-                    Toast.makeText(requireContext(), "No se encontraron rutas", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "No se encontraron rutas", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {
-                Toast.makeText(requireContext(), "Error al obtener la ruta: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error al obtener la ruta: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

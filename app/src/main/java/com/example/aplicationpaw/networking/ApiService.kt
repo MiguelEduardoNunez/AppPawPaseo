@@ -1,6 +1,8 @@
 package com.example.vfragment.networking
 
+import com.example.aplicationpaw.modelos.CrearPeticionRequest
 import com.example.aplicationpaw.modelos.Mascota
+import com.example.aplicationpaw.modelos.RespuestaServidor
 import com.example.vfragment.modelos.CredencialesLogin
 import com.example.vfragment.modelos.UsuarioResponse
 import okhttp3.RequestBody
@@ -24,8 +26,8 @@ interface ApiService {
         @PartMap fields: Map<String, @JvmSuppressWildcards RequestBody>
     ): Call<UsuarioResponse>
 
-    @POST("/peticion")
-    fun createRequest(@Body requestBody: com.example.aplicationpaw.modelos.RequestBody): Call<Void>
+    @POST("peticion")
+    fun crearPeticion(@Body request: CrearPeticionRequest): Call<RespuestaServidor>
 
     @GET("mascotasUsuario/{id}")
     fun getMascotasUsuario(@Path("id") userId: String): Call<List<Mascota>>
