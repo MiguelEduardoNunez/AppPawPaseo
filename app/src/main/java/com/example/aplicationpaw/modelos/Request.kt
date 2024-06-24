@@ -10,14 +10,21 @@ data class Coordenada(
 data class CrearPeticionRequest(
     val longitud: Double,
     val latitud: Double,
-    val precio: Double,
-    val descripcion: String,
-    val estado: String,
-    val date: Date?,
-    val user: String,
-    val paseador: String?
+    val precio: String,
+    val user: String
 )
 
 data class RespuestaServidor(
-    val mensaje: String
+    val longitud: String,
+    val latitud: String,
+    val precio: Int,
+    val date: String,
+    val user: String,
+    val estado: String,
+    val paseador: String?,
+    val completado: Boolean,
+    val _id: String,
+    val createdAt: String,
+    val updatedAt: String,
+    val __v: Int
 )
