@@ -15,4 +15,10 @@ object RetrofitClient {
 
         retrofit.create(RegisterService::class.java)
     }
+    fun getRetrofitInstance(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 }

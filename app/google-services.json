@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "416314376014",
+    "project_id": "pawpaseo-44a15",
+    "storage_bucket": "pawpaseo-44a15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416314376014:android:db15c671b3d0d36644e81f",
+        "android_client_info": {
+          "package_name": "com.example.aplicationpaw"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDom8zc309F0XyqpzCT19KPv3W4NByMTGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

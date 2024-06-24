@@ -31,4 +31,9 @@
     <string name="confirme_su_contrase_a">Confirme su contraseña</string>
     <string name="registrarse">registrarse</string>
     <string name="acceder"><b><u>acceder</u></b></string>
+    <string name="imagenlogo">imagenlogo</string>
+    <string name="valor">VALOR</string>
+    <string name="tipo_de_paseo">Tipo de Paseo</string>
+    <string name="n_de_servicios_completados">N° de Servicios Completados</string>
+    <string name="nick_del_usuario">Nick del Usuario</string>
 </resources>
