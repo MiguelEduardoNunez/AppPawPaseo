@@ -177,7 +177,7 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
                     val paseador = Gson().fromJson(data, PeticionPaseador::class.java)
 
                     if(!isFristLoad && paseador.status != view.context.getString(R.string.nuevo)) {
-                        if(paseador?.status == getString(R.string.aceptado)){
+                        if(paseador?.status == view.context.getString(R.string.aceptado)){
                             //lo acepto el cliente el precio nuevo
                             Toast.makeText(context, "Se acepto la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
                         }else{
