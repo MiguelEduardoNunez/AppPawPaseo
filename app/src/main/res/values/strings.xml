@@ -44,4 +44,9 @@
     <string name="raza">Raza</string>
     <string name="tama_o">Tamaño</string>
     <string name="desafios">Desafios</string>
+
+    <string name="aceptado">ACEPTADO</string>
+    <string name="nuevo">NUEVO</string>
+
+    <string name="paseadores">paseadores</string>
 </resources>
