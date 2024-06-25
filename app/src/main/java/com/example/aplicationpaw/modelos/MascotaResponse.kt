@@ -1,8 +1,8 @@
 package com.example.aplicationpaw.modelos
 
 
-data class Mascota(
-    val _id: String,
+data class MascotaResponse(
+    val id: String,
     val nombre: String,
     val descripcion: String,
     val genero: String,
@@ -10,5 +10,13 @@ data class Mascota(
     val raza: String,
     val vacunas: String,
     val alergias: String,
-    val peso: String
+    val peso: String,
+    val createdAt: String,
+    val updatedAt: String,
+    val usuario: String
 )
+
+
+
+
+

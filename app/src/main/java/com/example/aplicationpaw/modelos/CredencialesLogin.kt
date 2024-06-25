@@ -13,5 +13,6 @@ data class UsuarioResponse (
     val ciudad: String,
     val createdAt: String,
     val updatedAt: String,
+    val certificado: String? = null,
     val services: String? = null
 )

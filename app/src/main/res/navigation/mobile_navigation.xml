@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/mascotasFragment"
         android:name="com.example.aplicationpaw.views.mascotas.MascotasFragment"
-        android:label="fragment_mascotas"
+        android:label="Mascotas"
         tools:layout="@layout/fragment_mascotas" />
 
     <!-- Paseador -->
@@ -44,11 +44,6 @@
         android:name="com.example.aplicationpaw.views.ui.perfil_paseador.PerfilPaseadorFragment"
         android:label="Perfil Paseador"
         tools:layout="@layout/fragment_perfil_paseador" />
-    <fragment
-        android:id="@+id/paseosFragment3"
-        android:name="com.example.aplicationpaw.views.ui.paseos.PaseosFragment"
-        android:label="fragment_paseos"
-        tools:layout="@layout/fragment_paseos" />
     <fragment
         android:id="@+id/detallePaseadorFragment"
         android:name="com.example.aplicationpaw.views.ui.detalle_paseador.DetallesPaseadorFragment"
