@@ -55,7 +55,7 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
                         val json = Gson().toJson(data.value)
                         val peticionPaseo = gson.fromJson(json, PeticionPaseo::class.java)
 
-                        if(peticionPaseo.status == getString(R.string.nuevo)){
+                        if(peticionPaseo.status == view.context.getString(R.string.nuevo)){
                             peticionesPaseos.add(peticionPaseo)
                         }
                     }

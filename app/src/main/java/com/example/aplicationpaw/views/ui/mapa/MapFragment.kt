@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.aplicationpaw.MainActivity
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.modelos.CrearPeticionRequest
 import com.example.aplicationpaw.modelos.PeticionPaseo
@@ -244,7 +245,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                     database.child(usuario_nombre).setValue(newElement)
                         .addOnSuccessListener {
                             Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
-                            findNavController().navigate(R.id.esperaUsuarioFragment)
+                            (activity as MainActivity?)?.loadEsperaUsuario()
                         }
                         .addOnFailureListener {
                             Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
