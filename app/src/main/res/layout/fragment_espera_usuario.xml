@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="Últimas Solicitudes Ofertadas"
+            android:text="@string/paseadores_disponibles"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
