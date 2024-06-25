@@ -11,19 +11,25 @@ import com.example.aplicationpaw.modelos.PeticionPaseador
 
 class EsperaUsuarioAdapter (private val peticionPaseadores: List<PeticionPaseador>, private val onClickItem: OnClickItem) : RecyclerView.Adapter<EsperaUsuarioAdapter.EsperaUsuarioViewHolder>() {
 
+    private lateinit var view: View
+
     interface OnClickItem {
         fun aceptar(peticionPaseador: PeticionPaseador);
         fun omitir(peticionPaseador: PeticionPaseador);
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EsperaUsuarioAdapter.EsperaUsuarioViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_card_esperausuario, parent, false)
+        view = LayoutInflater.from(parent.context).inflate(R.layout.activity_card_esperausuario, parent, false)
         return EsperaUsuarioViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: EsperaUsuarioViewHolder, position: Int) {
         val peticionPaseo = peticionPaseadores[position];
+
+        val valor = view.context.getString(R.string.aceptar_por_cop_valor).replace("COP", peticionPaseo.precio);
+
         holder.usuario.text = peticionPaseo.user;
+        holder.btnAceptar.text = valor
 
         //click
         holder.btnAceptar.setOnClickListener {

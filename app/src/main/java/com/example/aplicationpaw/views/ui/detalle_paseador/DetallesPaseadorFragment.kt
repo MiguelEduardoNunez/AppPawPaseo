@@ -56,6 +56,7 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
     private var isFristLoad: Boolean = true;
     private lateinit var database: DatabaseReference
 
+    private lateinit var view: View
 
     private lateinit var userLogin: String
     private lateinit var user: String
@@ -75,7 +76,7 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_detalles_paseador, container, false)
+        view = inflater.inflate(R.layout.fragment_detalles_paseador, container, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
         return view;
     }
@@ -175,7 +176,7 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
                     val data = Gson().toJson(datas);
                     val paseador = Gson().fromJson(data, PeticionPaseador::class.java)
 
-                    if(!isFristLoad && paseador.status != getString(R.string.nuevo)) {
+                    if(!isFristLoad && paseador.status != view.context.getString(R.string.nuevo)) {
                         if(paseador?.status == getString(R.string.aceptado)){
                             //lo acepto el cliente el precio nuevo
                             Toast.makeText(context, "Se acepto la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
