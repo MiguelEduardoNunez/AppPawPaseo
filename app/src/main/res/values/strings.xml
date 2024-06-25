@@ -53,4 +53,5 @@
     <string name="acepta"> Su petición ha sido aceptada por:</string>
     <string name="paseadores_disponibles">Paseadores Disponibles</string>
     <string name="o_trabaja_con_nosotros">O <b><u>Trabaja con Nosotros</u></b></string>
+    <string name="rechazado">RECHAZADO</string>
 </resources>

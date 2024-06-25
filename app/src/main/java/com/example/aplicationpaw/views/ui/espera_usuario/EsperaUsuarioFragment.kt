@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aplicationpaw.MainActivity
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.modelos.PeticionPaseador
 import com.google.firebase.Firebase
@@ -27,6 +28,8 @@ class EsperaUsuarioFragment : Fragment(), EsperaUsuarioAdapter.OnClickItem {
     private var peticionesPaseadores = mutableListOf<PeticionPaseador>()
     private lateinit var database: DatabaseReference
 
+    private lateinit var userLogin: String
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_espera_usuario, container, false)
@@ -42,7 +45,7 @@ class EsperaUsuarioFragment : Fragment(), EsperaUsuarioAdapter.OnClickItem {
 
         database = Firebase.database.reference;
         var sharedPreferences = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
-        val userLogin = sharedPreferences.getString("nombre_usuario", "") ?: ""
+        userLogin = sharedPreferences.getString("nombre_usuario", "") ?: ""
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -76,10 +79,27 @@ class EsperaUsuarioFragment : Fragment(), EsperaUsuarioAdapter.OnClickItem {
     }
 
     override fun aceptar(peticionPaseador: PeticionPaseador) {
-        Toast.makeText(context, "ACEPTAR", Toast.LENGTH_LONG).show();
+        database.child(userLogin).child(getString(R.string.paseadores)).child(peticionPaseador.user).child("status")
+            .setValue(view?.context?.getString(R.string.aceptado)).addOnSuccessListener {
+
+                database.child(userLogin).child("status").setValue(view?.context?.getString(R.string.aceptado)).addOnSuccessListener {
+                    Toast.makeText(context, "Se acepto al paseador.", Toast.LENGTH_LONG).show();
+                }.addOnFailureListener {
+                    Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                }
+
+        }.addOnFailureListener {
+            Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+        }
     }
 
     override fun omitir(peticionPaseador: PeticionPaseador) {
-        Toast.makeText(context, "OMITIR", Toast.LENGTH_LONG).show();
+        database.child(userLogin).child(getString(R.string.paseadores)).child(peticionPaseador.user).child("status")
+            .setValue(view?.context?.getString(R.string.rechazado)).addOnSuccessListener {
+
+                Toast.makeText(context, "Se rechazo al paseador.", Toast.LENGTH_LONG).show();
+            }.addOnFailureListener {
+                Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+            }
     }
 }
