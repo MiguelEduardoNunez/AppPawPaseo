@@ -44,4 +44,5 @@
     <string name="raza">Raza</string>
     <string name="tama_o">Tamaño</string>
     <string name="desafios">Desafios</string>
+    <string name="acepta"> Su petición ha sido aceptada por:</string>
 </resources>
