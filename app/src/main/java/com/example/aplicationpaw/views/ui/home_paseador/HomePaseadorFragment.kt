@@ -1,6 +1,5 @@
 package com.example.aplicationpaw.views.ui.home_paseador
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +19,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.gson.Gson
+import okhttp3.internal.userAgent
 
 class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
 
@@ -43,9 +43,6 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreferences = requireActivity().getSharedPreferences("user_session", Context.MODE_PRIVATE)
-        val usuario = sharedPreferences.getString("nombre_usuario", null) ?: ""
-
         database = Firebase.database.reference;
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -58,7 +55,7 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
                         val json = Gson().toJson(data.value)
                         val peticionPaseo = gson.fromJson(json, PeticionPaseo::class.java)
 
-                        if(peticionPaseo.status.equals("NUEVO")){
+                        if(peticionPaseo.status == getString(R.string.nuevo)){
                             peticionesPaseos.add(peticionPaseo)
                         }
                     }

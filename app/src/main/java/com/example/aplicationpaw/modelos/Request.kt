@@ -22,6 +22,14 @@ data class PeticionPaseo(
     val status: String
 )
 
+data class PeticionPaseador(
+    val longitud: Double,
+    val latitud: Double,
+    val precio: String,
+    val user: String,
+    val status: String,
+)
+
 data class RespuestaServidor(
     val longitud: String,
     val latitud: String,

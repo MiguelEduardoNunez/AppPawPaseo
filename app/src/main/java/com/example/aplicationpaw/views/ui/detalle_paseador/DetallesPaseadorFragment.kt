@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +14,10 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.aplicationpaw.R
-import com.example.aplicationpaw.modelos.PeticionPaseo
+import com.example.aplicationpaw.modelos.PeticionPaseador
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -27,8 +29,12 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
+import com.google.gson.Gson
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 import com.google.maps.model.TravelMode
@@ -36,6 +42,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.reflect.Type
+
 
 class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
@@ -44,7 +52,19 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
     private var startLatLng: LatLng? = null
     private var endLatLng: LatLng? = null
     private lateinit var sharedPreferences: SharedPreferences
+
+    private var isFristLoad: Boolean = true;
     private lateinit var database: DatabaseReference
+
+
+    private lateinit var userLogin: String
+    private lateinit var user: String
+    private lateinit var precio: String
+
+    private lateinit var btnAcept: Button
+    private lateinit var btn500: Button
+    private lateinit var btn1000: Button
+    private lateinit var btnOmitir: Button
 
     interface OnRouteDrawnListener {
         fun onRouteDrawn(startLatLng: LatLng, endLatLng: LatLng)
@@ -67,49 +87,118 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
 
         sharedPreferences =
             requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
+        // Obtener el nombre de usuario de las preferencias compartidas
+        userLogin = sharedPreferences.getString("nombre_usuario", "") ?: ""
 
         // Inicializar el mapa
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapa) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         //iniciar logica
-        initLogid(view);
+        init(view);
+        //iniciar funciones onclick
+        initOnClick();
+        //para estar pendiente a si lo aceptan o declinan
+        initFirebase();
     }
 
-    fun initLogid(view: View) {
+    fun init(view: View) {
+        //get arguments
         val latitudInicial = getArguments()?.getDouble("latitudInicial") ?: 0.0;
         val longitudInicial = getArguments()?.getDouble("longitudInicial") ?: 0.0;
         val latitudFinal = getArguments()?.getDouble("latitudFinal") ?: 0.0;
         val longitudFinal = getArguments()?.getDouble("longitudFinal") ?: 0.0;
-        val user = getArguments()?.getString("user") ?: "";
-        val precio = getArguments()?.getString("precio") ?: "";
+        user = getArguments()?.getString("user") ?: "";
+        precio = getArguments()?.getString("precio") ?: "";
 
-        val precioFinal = getString(R.string.aceptar_por_cop_valor).replace("COP", precio);
-
+        //guardar datos
         startLatLng = LatLng(latitudInicial, longitudInicial);
         endLatLng = LatLng(latitudFinal, longitudFinal);
         view.findViewById<TextView>(R.id.nick_usuario).text = user;
 
-        val btnAcept = view.findViewById<Button>(R.id.btn_valor);
-        val btn500 = view.findViewById<Button>(R.id.btn_valor500);
-        val btn1000 = view.findViewById<Button>(R.id.btn_valor1000);
-        val btnOmitir = view.findViewById<TextView>(R.id.btn_omitir);
+        //buscar elementos en la vista
+        btnAcept = view.findViewById(R.id.btn_valor);
+        btn500 = view.findViewById(R.id.btn_valor500);
+        btn1000 = view.findViewById(R.id.btn_valor1000);
+        btnOmitir = view.findViewById(R.id.btn_omitir);
 
+        //llamar para establercer precio
+        changePrice();
+    }
+
+    fun changePrice(){
+        //inicializar precio
+        val precioFinal = getString(R.string.aceptar_por_cop_valor).replace("COP", precio);
         btnAcept.text = precioFinal;
-        btnAcept.setOnClickListener(View.OnClickListener {
-            database.child(user).child("status").setValue("ACEPTADO")
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
+    }
 
-                    btnAcept.isEnabled = false;
-                    btn500.isEnabled = false;
-                    btn1000.isEnabled = false;
-                    btnOmitir.isEnabled = false;
+    fun initOnClick(){
+        btnAcept.setOnClickListener {
+            val paseador = PeticionPaseador(1.0, 1.0, precio, userLogin, getString(R.string.nuevo));
+
+            //se guarda el nuevo status, si no modifico el precio queda como ACEPTADO, si modifica el precio queda como MODIFICADO
+            database.child(user).child(getString(R.string.paseadores)).child(userLogin).setValue(paseador)
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Se envio la notificación al usuario en espera de confirmación.", Toast.LENGTH_LONG).show();
+                    enableBtns(false);
                 }
                 .addOnFailureListener {
                     Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
                 }
-        });
+        };
+
+        btn500.setOnClickListener {
+            //se aumenta el precio, se cambia de estatus
+            precio = (precio.toInt() + 500).toString();
+            changePrice();
+        };
+
+        btn1000.setOnClickListener {
+            //se aumenta el precio, se cambia de estatus
+            precio = (precio.toInt() + 1000).toString();
+            changePrice();
+        }
+    }
+
+    fun enableBtns(enable: Boolean){
+        btnAcept.isEnabled = enable;
+        btn500.isEnabled = enable;
+        btn1000.isEnabled = enable;
+        btnOmitir.isEnabled = enable;
+    }
+
+    fun initFirebase(){
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if(dataSnapshot.getValue() != null){
+                    val datas = dataSnapshot.getValue() as HashMap<*, *>
+                    val paseador = Gson().fromJson(datas.toString(), PeticionPaseador::class.java)
+
+                    if(!isFristLoad && paseador.status != getString(R.string.nuevo)) {
+                        if(paseador?.status == getString(R.string.aceptado)){
+                            //lo acepto el cliente el precio nuevo
+                            Toast.makeText(context, "Se acepto la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
+                        }else{
+                            //no acepto el nuevo precio se declina solicitud
+                            Toast.makeText(context, "Se declino la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
+                            findNavController().navigate(R.id.homePaseadorFragment);
+                        }
+                    }else{
+                        //se pone en false cuando pase la 1ra ves
+                        //para que solo cuando se modifique se lance el flujo
+                        //de lo contrario cuando cargue por 1ra ves el fragmen dira que se modifico
+                        isFristLoad = false;
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        //buscar solo por el usuario los cambios
+        database.child(user).child(getString(R.string.paseadores)).child(userLogin).addValueEventListener(postListener);
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
