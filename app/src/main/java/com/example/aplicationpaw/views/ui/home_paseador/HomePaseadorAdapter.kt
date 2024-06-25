@@ -27,9 +27,9 @@ class HomePaseadorAdapter(private val peticionesPaseos: List<PeticionPaseo>, pri
         holder.valor.text = peticionPaseo.precio;
 
         //click
-        holder.card.setOnClickListener(View.OnClickListener {
+        holder.card.setOnClickListener {
             onClickItem.click(peticionPaseo);
-        });
+        };
     }
 
     override fun getItemCount(): Int {

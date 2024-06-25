@@ -214,13 +214,14 @@
                         android:text="@string/_1000" />
                 </LinearLayout>
 
-                <TextView
+                <Button
                     android:id="@+id/btn_omitir"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/omitir"
                     android:textColor="@color/azul"
+                    android:backgroundTint="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -240,7 +241,6 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <androidx.fragment.app.FragmentContainerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mapa"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
