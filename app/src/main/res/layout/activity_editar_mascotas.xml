@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".views.editar_mascotas.EditarMascotas">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/confirmado" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:padding="10dp"
         android:text="@string/tittle_actualizacion"
         android:textAlignment="center"
         android:textSize="30sp" />
+    <EditText
+        android:id="@+id/id_mascota"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:hint="ID mascota"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/fotomascota" />
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -30,7 +49,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="500dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -46,15 +65,17 @@
                     android:textSize="20sp" />
 
                 <EditText
+                    android:id="@+id/nombreTextView"
                     android:layout_width="350dp"
                     android:layout_height="58dp"
                     android:layout_gravity="center"
                     android:background="@drawable/bordes"
                     android:backgroundTint="@color/azulClaro"
                     android:hint="NOMBRE"
+                    android:textSize="15sp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/white"></EditText>
+                    android:textColorHint="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -69,6 +90,13 @@
                     android:layout_marginLeft="40dp"
                     android:text="General"
                     android:textSize="20sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="40dp"
+                    android:text="Descripción:"
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="350dp"
@@ -77,113 +105,129 @@
                     android:background="@drawable/bordes"
                     android:backgroundTint="@color/amarillo">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <EditText
+                        android:id="@+id/descriptionTextView"
+                        android:layout_width="350dp"
+                        android:layout_height="58dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20sp"
-                        android:text="Genero"
+                        android:background="@drawable/bordes"
+                        android:backgroundTint="@color/amarillo"
+                        android:hint="Descripcion"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textColorHint="@color/white"
+                        android:textSize="15sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="No Seleccionado"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5sp"
-                        android:layout_marginRight="20sp"
-                        android:src="@drawable/seguirabajo" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:text="Genero:"
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="350dp"
                     android:layout_height="58dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10sp"
+
                     android:background="@drawable/bordes"
                     android:backgroundTint="@color/azulClaro">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <EditText
+                        android:id="@+id/generoTextView"
+                        android:layout_width="350dp"
+                        android:layout_height="58dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20sp"
-                        android:text="Fecha de nacimiento"
+                        android:background="@drawable/bordes"
+                        android:backgroundTint="@color/azulClaro"
+                        android:hint="Genero"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textColorHint="@color/white"
+                        android:textSize="15sp" />
+
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="No Seleccionado"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5sp"
-                        android:layout_marginRight="20sp"
-                        android:src="@drawable/seguirabajo" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:text="Fecha de Nacimiento:"
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="350dp"
                     android:layout_height="58dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10sp"
                     android:background="@drawable/bordes"
                     android:backgroundTint="@color/amarillo">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <EditText
+                        android:id="@+id/fechaNacimientoTextView"
+                        android:layout_width="350dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20sp"
-                        android:text="Raza"
+                        android:background="@drawable/bordes"
+                        android:backgroundTint="@color/amarillo"
+                        android:hint="Fecha de nacimiento"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textColorHint="@color/white"
+                        android:textSize="15sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="No Seleccionado"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
+                </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:text="Raza:"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="350dp"
+                    android:layout_height="58dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bordes"
+                    android:backgroundTint="@color/amarillo">
+
+                    <EditText
+                        android:id="@+id/razaTextView"
+                        android:layout_width="350dp"
+                        android:layout_height="58dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5sp"
-                        android:layout_marginRight="20sp"
-                        android:src="@drawable/seguirabajo" />
+                        android:background="@drawable/bordes"
+                        android:backgroundTint="@color/azulClaro"
+                        android:hint="Raza"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
                 </LinearLayout>
 
 
@@ -202,75 +246,40 @@
                     android:text="Perfil del perro"
                     android:textSize="20sp" />
 
-                <LinearLayout
-                    android:layout_width="350dp"
-                    android:layout_height="58dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10sp"
-                    android:background="@drawable/bordes"
-                    android:backgroundTint="@color/azulClaro">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20sp"
-                        android:text="Vacunación"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="No Seleccionado"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5sp"
-                        android:layout_marginRight="20sp"
-                        android:src="@drawable/seguirabajo" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:text="Vacunas:"
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="350dp"
                     android:layout_height="58dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10sp"
                     android:background="@drawable/bordes"
                     android:backgroundTint="@color/amarillo">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <EditText
+                        android:id="@+id/vacunacionTextView"
+                        android:layout_width="350dp"
+                        android:layout_height="58dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20sp"
-                        android:text="Recomendaciones"
+                        android:background="@drawable/bordes"
+                        android:backgroundTint="@color/amarillo"
+                        android:hint="Vacunas"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textColorHint="@color/white"
+                        android:textSize="15sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Sin comentarios"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -285,83 +294,72 @@
                         android:text="Salud"
                         android:textSize="20sp" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Alergias:"
+                        android:textSize="18sp" />
 
                     <LinearLayout
                         android:layout_width="350dp"
                         android:layout_height="58dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10sp"
-                        android:background="@drawable/bordes"
-                        android:backgroundTint="@color/amarillo">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="20sp"
-                            android:text="Alergias"
-                            android:textColor="@color/white"
-                            android:textSize="18sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="No Seleccionado"
-                            android:textColor="@color/white"
-                            android:textSize="18sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5sp"
-                            android:layout_marginRight="20sp"
-                            android:src="@drawable/seguirabajo" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="350dp"
-                        android:layout_height="58dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10sp"
                         android:background="@drawable/bordes"
                         android:backgroundTint="@color/azulClaro">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <EditText
+                            android:id="@+id/alergiasTextView"
+                            android:layout_width="350dp"
+                            android:layout_height="58dp"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="20sp"
-                            android:text="Peso"
+                            android:background="@drawable/bordes"
+                            android:backgroundTint="@color/azulClaro"
+                            android:hint="Alergias"
+                            android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textColorHint="@color/white"
+                            android:textSize="15sp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_weight="1" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="No Seleccionado"
-                            android:textColor="@color/white"
-                            android:textSize="18sp" />
+                    </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Peso:"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="350dp"
+                        android:layout_height="58dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bordes"
+                        android:backgroundTint="@color/amarillo">
+
+                        <EditText
+                            android:id="@+id/peso_mascota"
+                            android:layout_width="350dp"
+                            android:layout_height="58dp"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="5sp"
-                            android:layout_marginRight="20sp"
-                            android:src="@drawable/seguirabajo" />
+                            android:background="@drawable/bordes"
+                            android:backgroundTint="@color/amarillo"
+                            android:hint="Peso"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textSize="15sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
                     </LinearLayout>
 
 
@@ -378,5 +376,6 @@
         android:layout_marginTop="5sp"
         android:backgroundTint="@color/azulClaro"
         android:text="GUARDAR" />
+
 
 </LinearLayout>

@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/mascotasFragment"
         android:name="com.example.aplicationpaw.views.mascotas.MascotasFragment"
-        android:label="fragment_mascotas"
+        android:label="Mascotas"
         tools:layout="@layout/fragment_mascotas" />
     <fragment
         android:id="@+id/esperaUsuarioFragment"

@@ -13,6 +13,7 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
+
         <ImageView
             android:id="@+id/fotoImageView"
             android:layout_width="130dp"
@@ -20,14 +21,49 @@
             android:layout_gravity="center"
             android:src="@drawable/fotomascota" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
         <TextView
             android:id="@+id/nombreTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:text="NOMBRE DE LA MASCOTA"
-            android:textSize="15sp" />
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:paddingTop="8dp"
+            android:text="Nombre" />
+
+        <TextView
+            android:id="@+id/generoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:paddingTop="4dp"
+            android:textSize="15sp"
+            android:text="Género" />
+
+        <TextView
+            android:id="@+id/razaTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:text="Raza" />
+
+        <TextView
+            android:id="@+id/pesoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:paddingTop="4dp"
+            android:text="Peso" />
+        </LinearLayout>
 
     </LinearLayout>
 

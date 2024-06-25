@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.aplicationpaw.MainActivity
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.views.register.Register
+import com.example.aplicationpaw.views.register.RegisterPaseador
 import com.example.vfragment.modelos.CredencialesLogin
 import com.example.vfragment.modelos.UsuarioResponse
 import com.example.vfragment.networking.ApiService
@@ -105,7 +106,6 @@ class Login : AppCompatActivity() {
                         val intent = Intent(this@Login, MainActivity::class.java)
                         startActivity(intent)
                         //mostrar el id del usuario
-                        Toast.makeText(this@Login, "ID del usuario: ${usuario.id}", Toast.LENGTH_SHORT).show()
                         finish()
 
                     } else {
@@ -130,6 +130,12 @@ class Login : AppCompatActivity() {
         val btnRegistrarse = findViewById<TextView>(R.id.btnRegistrarse)
         btnRegistrarse.setOnClickListener {
             val intent = Intent(this, Register::class.java)
+            startActivity(intent)
+        }
+
+        val btnRegistrarsePaseador = findViewById<TextView>(R.id.btnTrabajaConNosotros)
+        btnRegistrarsePaseador.setOnClickListener {
+            val intent = Intent(this, RegisterPaseador::class.java)
             startActivity(intent)
         }
     }

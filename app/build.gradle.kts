@@ -65,8 +65,10 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
     //imagenes
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation (libs.glide)
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("com.airbnb.android:lottie:4.0.0")
+
 
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:33.1.1"))

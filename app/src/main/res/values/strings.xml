@@ -28,6 +28,7 @@
     <string name="price_format">Precio: $%.1f</string>
     <string name="tittle_actualizacion">¡Puedes Actualizar los Datos!</string>
     <string name="registrar">--------------- Registrarse ---------------</string>
+    <string name="registrar_colaborador">--------------- Registrarse como Colaborador ---------------</string>
     <string name="confirme_su_contrase_a">Confirme su contraseña</string>
     <string name="registrarse">registrarse</string>
     <string name="acceder"><b><u>acceder</u></b></string>
@@ -51,4 +52,5 @@
     <string name="paseadores">paseadores</string>
     <string name="acepta"> Su petición ha sido aceptada por:</string>
     <string name="paseadores_disponibles">Paseadores Disponibles</string>
+    <string name="o_trabaja_con_nosotros">O <b><u>Trabaja con Nosotros</u></b></string>
 </resources>

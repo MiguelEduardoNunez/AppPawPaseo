@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/ViewLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ImageView
@@ -108,14 +108,31 @@
                 android:textSize="17sp"
                 app:backgroundTint="@color/verded" />
 
-            <TextView
-                android:id="@+id/btnRegistrarse"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="@string/crear"
-                android:textSize="15sp" />
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnRegistrarse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/crear"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/btnTrabajaConNosotros"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/o_trabaja_con_nosotros"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
