@@ -17,7 +17,7 @@ class EsperaUsuarioAdapter (private val peticionPaseadores: List<PeticionPaseado
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EsperaUsuarioAdapter.EsperaUsuarioViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_card_paseador, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_card_esperausuario, parent, false)
         return EsperaUsuarioViewHolder(view)
     }
 

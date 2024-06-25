@@ -172,7 +172,8 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if(dataSnapshot.getValue() != null){
                     val datas = dataSnapshot.getValue() as HashMap<*, *>
-                    val paseador = Gson().fromJson(datas.toString(), PeticionPaseador::class.java)
+                    val data = Gson().toJson(datas);
+                    val paseador = Gson().fromJson(data, PeticionPaseador::class.java)
 
                     if(!isFristLoad && paseador.status != getString(R.string.nuevo)) {
                         if(paseador?.status == getString(R.string.aceptado)){
