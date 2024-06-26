@@ -181,6 +181,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
             showPriceDialog()
         }
     }
+    //inicializar lateinit var sharedPreferences
+
 
     private fun showPriceDialog() {
         val builder = AlertDialog.Builder(requireContext())
@@ -206,7 +208,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
         builder.show()
     }
 
-    private fun createRequest(precio: String) {
+    private fun createRequest(precio : String) {
         val userId = sharedPreferences.getString("user_id", "") ?: ""
         if (userId.isEmpty()) {
             Toast.makeText(
@@ -231,12 +233,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                 response: Response<RespuestaServidor>
             ) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Petición creada exitosamente",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
                     //firebase guardar datos
                     database = Firebase.database.reference;
                     val usuario_nombre = sharedPreferences.getString("nombre_usuario", null) ?: ""
@@ -252,7 +248,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                     );
                     database.child(usuario_nombre).setValue(newElement)
                         .addOnSuccessListener {
-                            Log.d("Database", "Datos guardados en Firebase Realtime Database")
+                            (activity as MainActivity?)?.loadEsperaUsuario()
                         }
                         .addOnFailureListener { error ->
                             Log.e("Database", "Error al guardar datos en Firebase", error)
@@ -260,7 +256,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Error en la creación de la petición",
+                        "Error al crear la petición: ${response.code()}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

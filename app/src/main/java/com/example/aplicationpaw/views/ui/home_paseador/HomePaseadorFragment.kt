@@ -61,8 +61,6 @@ class HomePaseadorFragment : Fragment(), HomePaseadorAdapter.OnClickItem {
                     }
 
                     adapter.notifyDataSetChanged();
-                }else{
-                    Toast.makeText(context, "No se encuentran registros", Toast.LENGTH_LONG).show();
                 }
             }
 

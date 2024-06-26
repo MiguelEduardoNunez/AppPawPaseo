@@ -57,12 +57,16 @@
         android:name="com.example.aplicationpaw.views.biblioteca_views.EjercicioFragment"
         android:label="Ejercicio"
         tools:layout="@layout/fragment_ejercicio" />
-
     <fragment
         android:id="@+id/articulosFragment"
         android:name="com.example.aplicationpaw.views.biblioteca_views.ArticulosFragment"
         android:label="Articulos"
         tools:layout="@layout/fragment_articulos" />
+    <fragment
+        android:id="@+id/aceptaUsuarioFragment"
+        android:name="com.example.aplicationpaw.views.ui.acepta_usuario.AceptUsuarioFragment"
+        android:label="Detalle Paseo"
+        tools:layout="@layout/fragment_acept_usuario" />
 
     <!-- Paseador -->
     <fragment
@@ -80,7 +84,11 @@
         android:name="com.example.aplicationpaw.views.ui.detalle_paseador.DetallesPaseadorFragment"
         android:label="Detalles del Paseo"
         tools:layout="@layout/fragment_detalles_paseador" />
-
+    <fragment
+        android:id="@+id/aceptaPaseadorFragment"
+        android:name="com.example.aplicationpaw.views.ui.acepta_paseador.AceptPaseadorFragment"
+        android:label="Detalle Paseo"
+        tools:layout="@layout/fragment_acept_paseador" />
 
 
 </navigation>
