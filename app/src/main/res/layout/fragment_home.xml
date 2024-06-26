@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".views.ui.home.HomeFragment">
 
-
-
     <!-- Reemplazar este fragmento por el nuevo MapFragment -->
     <FrameLayout
         android:id="@+id/map_fragment_container"
@@ -16,8 +14,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp" >
 
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

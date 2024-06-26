@@ -11,11 +11,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.aplicationpaw.MainActivity
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.modelos.CrearPeticionRequest
@@ -32,9 +33,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.database
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 import com.google.maps.model.TravelMode
@@ -47,7 +48,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
@@ -86,6 +86,16 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
         arguments?.let {
             price = it.getString("PRICE")
             userId = it.getString("USER_ID")
+        }
+
+        // Configurar botón de marcar ruta
+        val btnMarcarRuta = view.findViewById<ImageButton>(R.id.btnMarcarRuta)
+        btnMarcarRuta.setOnClickListener {
+            if (startLatLng == null || endLatLng == null) {
+                Toast.makeText(requireContext(), "Selecciona un punto de inicio y un punto final en el mapa", Toast.LENGTH_SHORT).show()
+            } else {
+                drawRoute(startLatLng, endLatLng)
+            }
         }
 
         val retrofit = Retrofit.Builder()
@@ -171,8 +181,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
             showPriceDialog()
         }
     }
-    //inicializar lateinit var sharedPreferences
-
 
     private fun showPriceDialog() {
         val builder = AlertDialog.Builder(requireContext())
@@ -198,7 +206,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
         builder.show()
     }
 
-    private fun createRequest(precio : String) {
+    private fun createRequest(precio: String) {
         val userId = sharedPreferences.getString("user_id", "") ?: ""
         if (userId.isEmpty()) {
             Toast.makeText(
@@ -244,98 +252,91 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                     );
                     database.child(usuario_nombre).setValue(newElement)
                         .addOnSuccessListener {
-                            Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
-                            (activity as MainActivity?)?.loadEsperaUsuario()
+                            Log.d("Database", "Datos guardados en Firebase Realtime Database")
                         }
-                        .addOnFailureListener {
-                            Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                        .addOnFailureListener { error ->
+                            Log.e("Database", "Error al guardar datos en Firebase", error)
                         }
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Error al crear la petición: ${response.code()}",
+                        "Error en la creación de la petición",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
 
             override fun onFailure(call: Call<RespuestaServidor>, t: Throwable) {
-                Toast.makeText(requireContext(), "Error de red: ${t.message}", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(
+                    requireContext(),
+                    "Error en la llamada: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
 
-    fun drawRoute(startLatLng: LatLng?, endLatLng: LatLng?) {
-        if (startLatLng == null || endLatLng == null) {
-            Toast.makeText(
-                requireContext(),
-                "Marca un punto de inicio y un punto de destino",
-                Toast.LENGTH_SHORT
-            ).show()
-            return
-        }
-
-        // Dibujar la ruta en el mapa
+    private fun drawRoute(startLatLng: LatLng?, endLatLng: LatLng?) {
+        if (startLatLng == null || endLatLng == null) return
+        val path: MutableList<LatLng> = ArrayList()
+        val context = GeoApiContext.Builder()
+            .apiKey(getString(R.string.google_maps_key))
+            .build()
         CoroutineScope(Dispatchers.IO).launch {
-            requestDirections(startLatLng, endLatLng)
-        }
+            val req = DirectionsApi.getDirections(
+                context,
+                "${startLatLng.latitude},${startLatLng.longitude}",
+                "${endLatLng.latitude},${endLatLng.longitude}"
+            )
+            req.mode(TravelMode.WALKING)
 
-        // Mostrar la longitud y latitud en el Log
-        Log.d(
-            "MapFragment",
-            "Latitud: ${startLatLng?.latitude}, Longitud: ${endLatLng?.longitude}"
-        )
-    }
+            try {
+                val res = req.await()
 
-    private suspend fun requestDirections(startLatLng: LatLng, endLatLng: LatLng) {
-        try {
-            val geoApiContext = GeoApiContext.Builder()
-                .apiKey(getString(R.string.google_maps_key))
-                .build()
-
-            val directionsResult = DirectionsApi.newRequest(geoApiContext)
-                .origin(com.google.maps.model.LatLng(startLatLng.latitude, startLatLng.longitude))
-                .destination(com.google.maps.model.LatLng(endLatLng.latitude, endLatLng.longitude))
-                .mode(TravelMode.DRIVING)
-                .await()
-
-            withContext(Dispatchers.Main) {
-                if (directionsResult.routes.isNotEmpty()) {
-                    val route = directionsResult.routes[0]
-                    val polylineOptions = PolylineOptions()
-
-                    route.legs.forEach { leg ->
-                        leg.steps.forEach { step ->
+                val route = res.routes[0]
+                if (route != null && route.legs.isNotEmpty()) {
+                    val leg = route.legs[0]
+                    for (step in leg.steps) {
+                        if (step.steps != null && step.steps.isNotEmpty()) {
+                            for (innerStep in step.steps) {
+                                val points = innerStep.polyline.decodePath()
+                                for (point in points) {
+                                    path.add(LatLng(point.lat, point.lng))
+                                }
+                            }
+                        } else {
                             val points = step.polyline.decodePath()
-                            points.forEach { point ->
-                                polylineOptions.add(LatLng(point.lat, point.lng))
+                            for (point in points) {
+                                path.add(LatLng(point.lat, point.lng))
                             }
                         }
                     }
-
-                    polylineOptions.width(10f)
-                    polylineOptions.color(Color.BLUE)
-                    mMap.addPolyline(polylineOptions)
-
-                    // Notificar al listener (PaseosFragment) que la ruta ha sido dibujada
-                    routeListener?.onRouteDrawn(startLatLng, endLatLng)
-                } else {
-                    Toast.makeText(requireContext(), "No se encontraron rutas", Toast.LENGTH_SHORT)
-                        .show()
                 }
-            }
-        } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(
-                    requireContext(),
-                    "Error al obtener la ruta: ${e.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                withContext(Dispatchers.Main) {
+                    if (path.isNotEmpty()) {
+                        val opts = PolylineOptions().addAll(path).color(Color.BLUE).width(5f)
+                        mMap.addPolyline(opts)
+                        routeListener?.onRouteDrawn(startLatLng, endLatLng)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "No se pudo dibujar la ruta",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error al obtener la dirección: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
-
 
     companion object {
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1

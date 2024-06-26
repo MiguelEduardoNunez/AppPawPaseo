@@ -28,14 +28,7 @@ class PaseosFragment : Fragment(), MapFragment.OnRouteDrawnListener {
 
 
         // Configurar botón de marcar ruta
-        val btnMarcarRuta = rootView.findViewById<Button>(R.id.editPersonalizacion)
-        btnMarcarRuta.setOnClickListener {
-            if (startLatLng == null || endLatLng == null) {
-                Toast.makeText(requireContext(), "Selecciona un punto de inicio y un punto final en el mapa", Toast.LENGTH_SHORT).show()
-            } else {
-                mapFragment?.drawRoute(startLatLng, endLatLng)
-            }
-        }
+
         return rootView
     }
 

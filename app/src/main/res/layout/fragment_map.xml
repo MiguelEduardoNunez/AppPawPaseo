@@ -12,5 +12,24 @@
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
+    <ImageButton
+        android:id="@+id/btnMarcarRuta"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_gravity="start"
+        android:src="@drawable/icon_ruta"
+        android:background="@drawable/rounded_button"
+        android:layout_margin="6dp" />
+
+    <ImageButton
+        android:id="@+id/btnLimpiar"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_gravity="start"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/rounded_button"
+        android:src="@drawable/icon_limpiar" />
+
 
 </FrameLayout>

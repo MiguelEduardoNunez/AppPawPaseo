@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -17,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AplicationPaw"
         tools:targetApi="31">
+        <activity
+            android:name=".views.ui.dialogo_exito.DialogSuccess"
+            android:exported="false" />
         <activity
             android:name=".views.ui.dialogo_cancelar.DialogCancelar"
             android:exported="false" />
