@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.modelos.PeticionPaseador
@@ -168,31 +169,35 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
     fun initFirebase(){
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if(dataSnapshot.value != null){
-                    val datas = dataSnapshot.value as HashMap<*, *>
-                    val data = Gson().toJson(datas);
-                    val paseador = Gson().fromJson(data, PeticionPaseador::class.java)
+                try{
+                    if(dataSnapshot.value != null){
+                        val datas = dataSnapshot.value as HashMap<*, *>
+                        val data = Gson().toJson(datas);
+                        val paseador = Gson().fromJson(data, PeticionPaseador::class.java)
 
-                    if(!isFristLoad && paseador.status != view.context.getString(R.string.nuevo)) {
-                        if(paseador?.status == view.context.getString(R.string.aceptado)){
-                            //lo acepto el cliente el precio nuevo
-                            Toast.makeText(view.context, "Se acepto la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
+                        if(!isFristLoad && paseador.status != view.context.getString(R.string.nuevo)) {
+                            if(paseador?.status == view.context.getString(R.string.aceptado)){
+                                //lo acepto el cliente el precio nuevo
+                                Toast.makeText(view.context, "Se acepto la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
 
-                            val bundle = Bundle();
-                            bundle.putString("user", user);
-                            bundle.putString("precio", precio);
-                            findNavController().navigate(R.id.aceptaPaseadorFragment, bundle);
+                                val bundle = Bundle();
+                                bundle.putString("user", user);
+                                bundle.putString("precio", precio);
+                                findNavController().navigate(R.id.aceptaPaseadorFragment, bundle);
+                            }else{
+                                //no acepto el nuevo precio se declina solicitud
+                                Toast.makeText(view.context, "Se declino la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
+                                findNavController().navigate(R.id.homePaseadorFragment);
+                            }
                         }else{
-                            //no acepto el nuevo precio se declina solicitud
-                            Toast.makeText(view.context, "Se declino la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
-                            findNavController().navigate(R.id.homePaseadorFragment);
+                            //se pone en false cuando pase la 1ra ves
+                            //para que solo cuando se modifique se lance el flujo
+                            //de lo contrario cuando cargue por 1ra ves el fragmen dira que se modifico
+                            isFristLoad = false;
                         }
-                    }else{
-                        //se pone en false cuando pase la 1ra ves
-                        //para que solo cuando se modifique se lance el flujo
-                        //de lo contrario cuando cargue por 1ra ves el fragmen dira que se modifico
-                        isFristLoad = false;
                     }
+                }catch (e:Exception){
+                    Log.w("ERROR", "loadPost:onCancelled", e.cause)
                 }
             }
 
