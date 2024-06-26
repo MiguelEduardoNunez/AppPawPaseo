@@ -18,7 +18,7 @@
         android:theme="@style/Theme.AplicationPaw"
         tools:targetApi="31">
         <activity
-            android:name=".views.biblioteca_views.Entrenamiento"
+            android:name=".views.ui.dialogo_cancelar.DialogCancelar"
             android:exported="false" />
         <activity
             android:name=".views.register.RegisterPaseador"

@@ -75,6 +75,10 @@
 
     <string name="ConclusionEntrenamiento">Estas normas de obediencia básica las debes practicar cada día con tu perro, debes repetirlas una y otra vez. Si es un cachorro, desde los 3 o 4 meses ya estará preparado para aprender y si ya es un adulto, nunca es tarde: siempre puedes mejorar cualquier comportamiento. Recuerda que las órdenes deben ser siempre las mismas, así no se confundirá tu animal de compañía. Elimina los castigos de la rutina con tu animal de compañía y premia los buenos comportamientos.</string>
     <string name="rechazado">RECHAZADO</string>
+    <string name="solicitud">Su petición ha sido solicitada:</string>
+    <string name="cancelar_solicitud">CANCELAR SOLICITUD</string>
+    <string name="paseador_camino">Felicidades, el paseador va en camino</string>
+    <string name="el_servicio_ha_sido_aceptado_por">El servicio ha sido aceptado por:</string>
 
     <string name="tittleJuegos">Juegos Para Jugar Con Tu Perro En Casa</string>
     <string name="Juegos1">1. Tira y afloja</string>

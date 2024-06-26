@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.ui.espera_usuario.EsperaUsuarioFragment">
+    tools:context=".views.ui.historial_usuario.HistUsuarioFragment">
 
     <LinearLayout
         android:id="@+id/linear_paseador"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewPaseadores">
+        app:layout_constraintBottom_toTopOf="@+id/ScrollAceptados">
 
         <TextView
             android:layout_width="match_parent"
@@ -44,17 +44,22 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:id="@+id/ScrollAceptados"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/linear_paseador"
+        app:layout_constraintBottom_toTopOf="@+id/Cancelar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPaseadores"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            tools:listitem="@layout/activity_card_esperausuario"
-            app:layout_constraintTop_toBottomOf="@id/linear_paseador"
-            app:layout_constraintBottom_toTopOf="@+id/Cancelar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/activity_card_esperausuario">
         </androidx.recyclerview.widget.RecyclerView>
+    </ScrollView>
 
     <Button
         android:id="@+id/Cancelar"
@@ -65,6 +70,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewPaseadores">
+        app:layout_constraintTop_toBottomOf="@id/ScrollAceptados">
     </Button>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
