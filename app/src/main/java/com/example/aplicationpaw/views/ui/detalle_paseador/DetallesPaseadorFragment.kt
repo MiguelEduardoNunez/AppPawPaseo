@@ -65,7 +65,6 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
     private lateinit var btnAcept: Button
     private lateinit var btn500: Button
     private lateinit var btn1000: Button
-    private lateinit var btnOmitir: Button
 
     interface OnRouteDrawnListener {
         fun onRouteDrawn(startLatLng: LatLng, endLatLng: LatLng)
@@ -121,7 +120,6 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
         btnAcept = view.findViewById(R.id.btn_valor);
         btn500 = view.findViewById(R.id.btn_valor500);
         btn1000 = view.findViewById(R.id.btn_valor1000);
-        btnOmitir = view.findViewById(R.id.btn_omitir);
 
         //llamar para establercer precio
         changePrice();
@@ -165,24 +163,28 @@ class DetallesPaseadorFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMap
         btnAcept.isEnabled = enable;
         btn500.isEnabled = enable;
         btn1000.isEnabled = enable;
-        btnOmitir.isEnabled = enable;
     }
 
     fun initFirebase(){
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if(dataSnapshot.getValue() != null){
-                    val datas = dataSnapshot.getValue() as HashMap<*, *>
+                if(dataSnapshot.value != null){
+                    val datas = dataSnapshot.value as HashMap<*, *>
                     val data = Gson().toJson(datas);
                     val paseador = Gson().fromJson(data, PeticionPaseador::class.java)
 
                     if(!isFristLoad && paseador.status != view.context.getString(R.string.nuevo)) {
                         if(paseador?.status == view.context.getString(R.string.aceptado)){
                             //lo acepto el cliente el precio nuevo
-                            Toast.makeText(context, "Se acepto la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(view.context, "Se acepto la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
+
+                            val bundle = Bundle();
+                            bundle.putString("user", user);
+                            bundle.putString("precio", precio);
+                            findNavController().navigate(R.id.aceptaPaseadorFragment, bundle);
                         }else{
                             //no acepto el nuevo precio se declina solicitud
-                            Toast.makeText(context, "Se declino la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(view.context, "Se declino la solicitud por parte del usuario.", Toast.LENGTH_LONG).show();
                             findNavController().navigate(R.id.homePaseadorFragment);
                         }
                     }else{

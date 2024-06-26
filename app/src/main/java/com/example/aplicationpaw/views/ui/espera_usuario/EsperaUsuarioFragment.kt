@@ -7,10 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.aplicationpaw.MainActivity
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.modelos.PeticionPaseador
 import com.google.firebase.Firebase
@@ -23,16 +24,17 @@ import com.google.gson.Gson
 
 class EsperaUsuarioFragment : Fragment(), EsperaUsuarioAdapter.OnClickItem {
 
+    private lateinit var view: View
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: EsperaUsuarioAdapter
     private var peticionesPaseadores = mutableListOf<PeticionPaseador>()
-    private lateinit var database: DatabaseReference
 
+    private lateinit var database: DatabaseReference
     private lateinit var userLogin: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_espera_usuario, container, false)
+        view = inflater.inflate(R.layout.fragment_espera_usuario, container, false)
         recyclerView = view.findViewById(R.id.recyclerViewPaseadores)
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = EsperaUsuarioAdapter(peticionesPaseadores, this)
@@ -44,13 +46,31 @@ class EsperaUsuarioFragment : Fragment(), EsperaUsuarioAdapter.OnClickItem {
         super.onViewCreated(view, savedInstanceState)
 
         database = Firebase.database.reference;
-        var sharedPreferences = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
+        val sharedPreferences = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE)
         userLogin = sharedPreferences.getString("nombre_usuario", "") ?: ""
 
+        init();
+        loadFirebase();
+    }
+
+    private fun init(){
+        val cancelar = view.findViewById<Button>(R.id.Cancelar);
+        cancelar.setOnClickListener {
+            database.child(userLogin).child("status").setValue(view.context.getString(R.string.cancelado)).addOnSuccessListener {
+                Toast.makeText(context, "Se cancelo la solicitud correctamente", Toast.LENGTH_LONG).show();
+                findNavController().popBackStack();
+                findNavController().navigate(R.id.navigation_home);
+            }.addOnFailureListener {
+                Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+            }
+        };
+    }
+
+    fun loadFirebase(){
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if(dataSnapshot.getValue() != null) {
-                    val datas = dataSnapshot.getValue() as HashMap<*, *>
+                if(dataSnapshot.value != null) {
+                    val datas = dataSnapshot.value as HashMap<*, *>
                     val gson = Gson()
 
                     peticionesPaseadores.clear();
@@ -58,14 +78,12 @@ class EsperaUsuarioFragment : Fragment(), EsperaUsuarioAdapter.OnClickItem {
                         val json = Gson().toJson(data.value)
                         val peticionPaseo = gson.fromJson(json, PeticionPaseador::class.java)
 
-                        if(peticionPaseo.status == getString(R.string.nuevo)){
+                        if(peticionPaseo.status == view.context.getString(R.string.nuevo)){
                             peticionesPaseadores.add(peticionPaseo)
                         }
                     }
 
                     adapter.notifyDataSetChanged();
-                }else{
-                    Toast.makeText(context, "No se encuentran registros", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -80,10 +98,15 @@ class EsperaUsuarioFragment : Fragment(), EsperaUsuarioAdapter.OnClickItem {
 
     override fun aceptar(peticionPaseador: PeticionPaseador) {
         database.child(userLogin).child(getString(R.string.paseadores)).child(peticionPaseador.user).child("status")
-            .setValue(view?.context?.getString(R.string.aceptado)).addOnSuccessListener {
+            .setValue(view.context?.getString(R.string.aceptado)).addOnSuccessListener {
 
-                database.child(userLogin).child("status").setValue(view?.context?.getString(R.string.aceptado)).addOnSuccessListener {
+                database.child(userLogin).child("status").setValue(view.context?.getString(R.string.aceptado)).addOnSuccessListener {
                     Toast.makeText(context, "Se acepto al paseador.", Toast.LENGTH_LONG).show();
+
+                    val bundle = Bundle();
+                    bundle.putString("user", peticionPaseador.user);
+                    bundle.putString("precio", peticionPaseador.precio);
+                    findNavController().navigate(R.id.aceptaUsuarioFragment, bundle);
                 }.addOnFailureListener {
                     Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
                 }
@@ -95,8 +118,7 @@ class EsperaUsuarioFragment : Fragment(), EsperaUsuarioAdapter.OnClickItem {
 
     override fun omitir(peticionPaseador: PeticionPaseador) {
         database.child(userLogin).child(getString(R.string.paseadores)).child(peticionPaseador.user).child("status")
-            .setValue(view?.context?.getString(R.string.rechazado)).addOnSuccessListener {
-
+            .setValue(view.context?.getString(R.string.rechazado)).addOnSuccessListener {
                 Toast.makeText(context, "Se rechazo al paseador.", Toast.LENGTH_LONG).show();
             }.addOnFailureListener {
                 Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();

@@ -223,12 +223,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                 response: Response<RespuestaServidor>
             ) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Petición creada exitosamente",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
                     //firebase guardar datos
                     database = Firebase.database.reference;
                     val usuario_nombre = sharedPreferences.getString("nombre_usuario", null) ?: ""
@@ -244,7 +238,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
                     );
                     database.child(usuario_nombre).setValue(newElement)
                         .addOnSuccessListener {
-                            Toast.makeText(context, "Guardado", Toast.LENGTH_LONG).show();
                             (activity as MainActivity?)?.loadEsperaUsuario()
                         }
                         .addOnFailureListener {

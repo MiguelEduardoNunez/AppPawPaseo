@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.bibliotecaFragment, R.id.perfilFragment,
                 R.id.paseosFragment, R.id.veterinariaFragment, R.id.guarderiaFragment,
                 R.id.homePaseadorFragment, R.id.detallePaseadorFragment, R.id.esperaUsuarioFragment,
-                R.id.programaEntretenimientoFragment
+                R.id.programaEntretenimientoFragment, R.id.aceptaUsuarioFragment, R.id.aceptaPaseadorFragment
             )
         )
         // Ocultar la flecha hacia atrás en la barra de acción
@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loadEsperaUsuario(){
+        navController.popBackStack();
         navController.navigate(R.id.esperaUsuarioFragment)
     }
 }
