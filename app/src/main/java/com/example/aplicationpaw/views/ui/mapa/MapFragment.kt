@@ -3,15 +3,17 @@ package com.example.aplicationpaw.views.ui.mapa
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -53,6 +55,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationManager: LocationManager
     private var startLatLng: LatLng? = null
     private var endLatLng: LatLng? = null
     private var price: String? = null
@@ -73,6 +76,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_map, container, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return rootView
     }
 
@@ -98,6 +102,19 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
             }
         }
 
+        val btnLimpiar = view.findViewById<ImageButton>(R.id.btnLimpiar)
+        btnLimpiar.setOnClickListener {
+            mMap.clear()
+            startLatLng = null
+            endLatLng = null
+        }
+
+        // Configurar botón de ubicación
+        val btnUbicacion = view.findViewById<ImageButton>(R.id.btnUbicacion)
+        btnUbicacion.setOnClickListener {
+            checkAndEnableGPS()
+        }
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://pawpaseo-backend-phi.vercel.app/api/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -105,6 +122,40 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener
 
         requestService = retrofit.create(ApiService::class.java)
     }
+    private fun checkAndEnableGPS() {
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            // GPS no está habilitado, mostrar diálogo para activarlo
+            AlertDialog.Builder(requireContext())
+                .setMessage("El GPS no está habilitado. ¿Quieres activarlo?")
+                .setPositiveButton("Sí") { dialog, which ->
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+                .setNegativeButton("No") { dialog, which ->
+                    dialog.dismiss()
+                }
+                .show()
+        } else {
+            // GPS está habilitado, centrar el mapa en la ubicación actual con zoom 17f
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    location?.let {
+                        val currentLatLng = LatLng(it.latitude, it.longitude)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f))
+                    }
+                }
+            } else {
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+                )
+            }
+        }
+    }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap

@@ -275,7 +275,8 @@
                 android:layout_marginTop="12dp"
                 android:backgroundTint="@color/amarillo"
                 android:text="Trabaja con Nosotros"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCerrarSesion"
