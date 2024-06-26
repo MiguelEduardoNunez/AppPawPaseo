@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-          <navigation xmlns:android="http://schemas.android.com/apk/res/android"
+           <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
@@ -9,13 +9,14 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.aplicationpaw.views.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="Paw-Paseo"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/bibliotecaFragment"
         android:name="com.example.aplicationpaw.views.ui.biblioteca.BibliotecaFragment"
         android:label="Biblioteca"
         tools:layout="@layout/fragment_biblioteca" />
+
     <fragment
         android:id="@+id/perfilFragment"
         android:name="com.example.aplicationpaw.views.ui.perfil.PerfilFragment"
@@ -32,11 +33,36 @@
         android:name="com.example.aplicationpaw.views.mascotas.MascotasFragment"
         android:label="Mascotas"
         tools:layout="@layout/fragment_mascotas" />
+
     <fragment
         android:id="@+id/esperaUsuarioFragment"
         android:name="com.example.aplicationpaw.views.ui.espera_usuario.EsperaUsuarioFragment"
         android:label="Home Espera"
         tools:layout="@layout/fragment_espera_usuario" />
+
+    <fragment
+        android:id="@+id/programaEntretenimientoFragment"
+        android:name="com.example.aplicationpaw.views.biblioteca_views.ProgramaEntretenimientoFragment"
+        android:label="programa de entretenimiento"
+        tools:layout="@layout/fragment_programa_entretenimiento" />
+
+    <fragment
+        android:id="@+id/juegosFragment"
+        android:name="com.example.aplicationpaw.views.biblioteca_views.JuegosFragment"
+        android:label="Juegos"
+        tools:layout="@layout/fragment_juegos" />
+
+    <fragment
+        android:id="@+id/ejercicioFragment"
+        android:name="com.example.aplicationpaw.views.biblioteca_views.EjercicioFragment"
+        android:label="Ejercicio"
+        tools:layout="@layout/fragment_ejercicio" />
+
+    <fragment
+        android:id="@+id/articulosFragment"
+        android:name="com.example.aplicationpaw.views.biblioteca_views.ArticulosFragment"
+        android:label="Articulos"
+        tools:layout="@layout/fragment_articulos" />
 
     <!-- Paseador -->
     <fragment
@@ -47,12 +73,14 @@
     <fragment
         android:id="@+id/perfilPaseadorFragment"
         android:name="com.example.aplicationpaw.views.ui.perfil_paseador.PerfilPaseadorFragment"
-        android:label="Perfil Paseador"
+        android:label="Perfil del Paseador"
         tools:layout="@layout/fragment_perfil_paseador" />
     <fragment
         android:id="@+id/detallePaseadorFragment"
         android:name="com.example.aplicationpaw.views.ui.detalle_paseador.DetallesPaseadorFragment"
-        android:label="Detalle Paseo"
+        android:label="Detalles del Paseo"
         tools:layout="@layout/fragment_detalles_paseador" />
+
+
 
 </navigation>

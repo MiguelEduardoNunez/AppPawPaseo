@@ -39,10 +39,10 @@ class HomeFragment : Fragment() {
         }
 
         // Configurar la navegación entre fragmentos
-        setupNavigation()
+        //setupNavigation()
     }
 
-    private fun setupNavigation() {
+    /*private fun setupNavigation() {
         val btnPaseos = binding.btnPaseos
         val btnGuarderia = binding.btnGuarderia
         val btnVeterinaria = binding.btnVeterinaria
@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
             btnPaseos.setBackgroundColor(colorNoSeleccionado)
             btnVeterinaria.setBackgroundColor(colorNoSeleccionado)
         }
-    }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

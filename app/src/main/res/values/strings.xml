@@ -53,5 +53,77 @@
     <string name="acepta"> Su petición ha sido aceptada por:</string>
     <string name="paseadores_disponibles">Paseadores Disponibles</string>
     <string name="o_trabaja_con_nosotros">O <b><u>Trabaja con Nosotros</u></b></string>
+
+    <string name="tittleEntrenamiento"> Ordenes Básicas de Obedencia</string>
+    <string name="Entrenamiento1">1. Sentarse:</string>
+    <string name="Entrenamiento2">2. Permanecer Quieto:</string>
+    <string name="Entrenamiento3">3. Venir:</string>
+    <string name="Entrenamiento4">4. Caminar a tu lado:</string>
+
+    <string name="ContextEntrenamiento1">El perro debe aprender a sentarse cuando se lo pidas. </string>
+    <string name="TextEntrenamiento1"> Puedes coger un trozo de comida con una mano y sostenerlo encima del perro, como un señuelo. Cuando se siente debes decir “siéntate” y darle el trozo de comida o una caricia. El perro entenderá, con la repetición, que si se sienta frente a ti tendrá un merecido premio.</string>
+
+    <string name="ContextEntrenamiento2">Si quieres que tu perro permanezca sentado y quieto, tanto en casa como en un lugar en el exterior, este es un buen truco que debes enseñarle. </string>
+    <string name="TextEntrenamiento2">El perro debe saber que al colocarte delante suyo con la palma de la mano extendida y al pronunciar la palabra: “quieto” debe quedarse inmóvil. Puedes alejarte de él y deberá permanecer en el mismo lugar. Premiar de inmediato al perro con una recompensa hará que lo memorice como un truco y lo vuelva a repetir.</string>
+
+    <string name="ContextEntrenamiento3">Tu perro debe saber que al llamarlo por su nombre debe venir. </string>
+    <string name="TextEntrenamiento3">Para que memorice este truco debes llamarlo por su nombre y decir la orden: “ven”. Si tu perro va hacia ti, debes premiarlo con lo que más le guste, puede ser una pelota, un juguete, algo de comer o decirle: “¡bien!”.</string>
+
+    <string name="ContextEntrenamiento4">Debes enseñarlo a ir tranquilo por la calle, con calma y concentrado en el camino.</string>
+    <string name="TextEntrenamiento4">Si el perro se adelanta o se retrasa debes darle un ligero tirón a la correa y premiar que ha seguido caminando a tu lado.</string>
+
+
+    <string name="ConclusionEntrenamiento">Estas normas de obediencia básica las debes practicar cada día con tu perro, debes repetirlas una y otra vez. Si es un cachorro, desde los 3 o 4 meses ya estará preparado para aprender y si ya es un adulto, nunca es tarde: siempre puedes mejorar cualquier comportamiento. Recuerda que las órdenes deben ser siempre las mismas, así no se confundirá tu animal de compañía. Elimina los castigos de la rutina con tu animal de compañía y premia los buenos comportamientos.</string>
     <string name="rechazado">RECHAZADO</string>
+
+    <string name="tittleJuegos">Juegos Para Jugar Con Tu Perro En Casa</string>
+    <string name="Juegos1">1. Tira y afloja</string>
+    <string name="Juegos2">2. El escondite</string>
+    <string name="Juegos3">3. Rompecabezas</string>
+    <string name="Juegos4">4. A la búsqueda de la golosina</string>
+    <string name="ContextJuegos1">Además de divertido para él, también podrás aprovechar para enseñarle algunas normas de obediencia.</string>
+    <string name="TextJuegos1">No permitas que tu perro salte a por el juguete si tú no le has ordenado que lo haga. O, si quieres que te dé el juguete, mantente quieto, en posición fija y, tan pronto tu perro suelte el juguete – si no hay movimiento, no hay diversión – refuérzalo positivamente ya sea con un ¡muy bien! o con algún premio.</string>
+    <string name="ExtraJuegos1">Utiliza juguetes resistentes, que puedan agarrarse fácilmente por ambos extremos. Si deseas subir el nivel de la emoción y que tu perro intente arrebatarte el juguete con más ganas, dale unas palmaditas en el lomo con la mano que te queda libre.</string>
+    <string name="ContextJuegos2">Para este juego no necesitas materiales</string>
+    <string name="TextJuegos2">Si has conseguido educar a tu perro para que se siente y espere, ¡genial!, tenemos el primer paso. A continuación, mientras tu perro espera paciente, escóndete en algún lugar de la casa de fácil acceso. Detrás de una puerta, del sofá o de la cama, pueden ser algunos de los lugares.</string>
+    <string name="ExtraJuegos2">Una vez que te hayas escondido y, si tu perro no se ha lanzado ya a buscarte, da unas palmaditas, sílbale o llámale por su nombre. Tu perro irá corriendo a buscarte, olfateando tu olor.</string>
+    <string name="ContextJuegos3">Puedes comprar uno ya fabricado o puedes elaborarlo tú mismo con productos de tu casa. Lo importante es que son juegos con los que agudizarás el ingenio de tu perro.</string>
+    <string name="TextJuegos3">Por lo tanto, podemos aprovechar algo tan sencillo como el juego, para estimular todas esas capacidades, porque, mientras juega, el perro toma decisiones, soluciona retos y pone a prueba su capacidad de comprender situaciones.</string>
+    <string name="ExtraJuegos3">Hay una gran variedad de ellos: con cajones, piezas, rincones ocultos… todo ello con la intención de mantener a tu perro entretenido durante un buen rato.</string>
+    <string name="ContextJuegos4">Juegos ideales para desarrollar su instinto olfativo</string>
+    <string name="TextJuegos4">Consiste en esconder golosinas, al principio, en lugares visibles y, conforme avanza el juego y tu perro las encuentre con mayor rapidez, aumenta la dificultad.</string>
+    <string name="ExtraJuegos4">Puedes tambien jugarlo de esta manera: Hazte con tres vasos opacos e introduce el premio en uno de ellos. Ponlos bocabajo en el suelo y, bajo la atenta mirada de tu perro, muévelos en varias direcciones para que él adivine donde se encuentra. </string>
+    <string name="ConclusionJuegos">El juego es una de las actividades más importantes y estimulantes para las mascotas. Además de fortalecer vuestra relación, les ayuda a quemar energía y a evitar la acumulación de estrés por estar encerrado.</string>
+
+
+    <string name="tittleEjercicios">Ejercicio para perros</string>
+    <string name="Ejercicios1">1. La natación</string>
+    <string name="Ejercicios2">2. Las escaleras</string>
+    <string name="Ejercicios3">3. Salir a pasear</string>
+    <string name="Ejercicios4">4. Agility</string>
+    <string name="ContextEjercicios1">Solo apta para perros en perfecto estado de salud, y de gran fortaleza física. También está indicada en perros que sufran patologías de cadera y codo, como ciertas razas pastoras como el Golden, pastor alemán o el labrador.</string>
+    <string name="TextEjercicios1">Aún sometiendo a nuestro animal a una sesión corta, la natación puede resultar absolutamente agotadora por lo que es importante ir escalando el tiempo para no llegar a extenuarlo. También es fundamental vigilar a nuestro perro durante la actividad, y hacer pequeñas pausas. Se puede combinar con tirar un juguete y que lo traiga de vuelta.</string>
+    <string name="ContextEjercicios2">¡Un ejercicio para perros en casa que, quizás, nunca se nos ha ocurrido! No solo nos referimos a subir y bajar escalones, que también es positivo aunque puede ser un ejercicio intenso. Nos referimos a utilizar la escalera como gimnasio perruno.</string>
+    <string name="TextEjercicios2">¿Cómo? Colocando las patas delanteras de nuestro perro dos escalones por encima de las traseras, y manteniendo esa postura durante un minuto. Repitiendo esta actividad, estaremos fortaleciendo los cuartos traseros del animal.</string>
+    <string name="ContextEjercicios3">Para que podamos considerarlo ejercicio, es fundamental que lo realicemos a buen paso y de forma enérgica.</string>
+    <string name="TextEjercicios3">Solo de esta manera surtirá efecto en nuestro animal. También es importante que tengan una duración de al menos 20 minutos. Dado que podemos adecuar la intensidad del ejercicio, nada como comenzar con paseos más lentos para ir incrementando paulatinamente la velocidad.</string>
+    <string name="ContextEjercicios4">cuentan con pruebas que resultan divertidas para los perros: rampas, obstáculos que han de ser saltados, túneles o postes para realizar slalom son algunas de las pruebas clave</string>
+    <string name="TextEjercicios4">siempre han de ser mayores de 18 meses y es recomendable contar con el visto bueno de su veterinario para hacerlo, también tiene beneficios para sus dueños. Porque practicar en un circuito de Agility favorece la obediencia de nuestro perro, además de mejorar la comunicación con él gracias al hecho de que tendremos que hacer ejercicio con él.</string>
+
+    <string name="regresar"> Regresar </string>
+
+    <string name="tittleArticulos">¡Sorprendentes habilidades de tu perro que no conocías!</string>
+    <string name="Articulos1">Detectan enfermedades: ¡superpoderes caninos!</string>
+    <string name="ContextArticulos1">Un estudio publicado en la revista "PLOS One" reveló que los perros pueden ser entrenados para detectar el COVID-19 con una precisión de hasta el 97%. Su agudo sentido del olfato les permite identificar el virus en muestras de saliva, orina e incluso aire exhalado. Esta habilidad podría ser una herramienta valiosa para combatir la pandemia, especialmente en lugares donde las pruebas tradicionales son limitadas.</string>
+    <string name="TextArticulos1">Imagina a tu perro como un héroe peludo: ¡ayudando a detectar enfermedades y salvar vidas! Gracias a su olfato superior, los perros entrenados pueden olfatear el virus en muestras de personas, incluso en aquellas asintomáticas. Esta capacidad podría ser crucial para controlar la propagación de enfermedades y proteger a las personas más vulnerables.</string>
+    <string name="Articulos2">Sueños vívidos: ¡aventuras oníricas de tu amigo peludo!</string>
+    <string name="ContextArticulos2">Un estudio realizado por investigadores de la Universidad de Georgia encontró que los perros experimentan patrones de ondas cerebrales similares a los de los humanos durante el sueño REM, la fase en la que se producen los sueños más vívidos. Esto sugiere que los perros también sueñan, y sus sueños podrían ser tan complejos y emocionantes como los nuestros.</string>
+    <string name="TextArticulos2">¿Alguna vez has visto a tu perro mover las patas, ladrar o incluso gruñir mientras duerme? ¡Podría estar soñando con perseguir ardillas en el parque, jugar a buscar con su juguete favorito o acurrucarse contigo! Los estudios sugieren que los sueños de los perros son tan vívidos como los nuestros, y podrían reflejar sus experiencias y emociones del mundo real.</string>
+    <string name="Articulos3">Reducen el estrés: ¡dosis de felicidad peluda!</string>
+    <string name="ContextArticulos3">Un estudio publicado en la revista "PLOS One" encontró que acariciar perros durante solo 15 minutos puede reducir significativamente los niveles de cortisol, la hormona del estrés, y aumentar los niveles de oxitocina, la hormona del amor y la felicidad.</string>
+    <string name="TextArticulos3">¿Sientes estrés? ¡Acaricia a tu perro! Un simple gesto de cariño hacia tu amigo peludo puede tener un gran impacto en tu bienestar emocional. Según estudios científicos, acariciar perros reduce el estrés y aumenta la felicidad. La interacción con perros libera oxitocina en nuestro cerebro, una hormona que nos hace sentir relajados y amados.</string>
+    <string name="Articulos4">Se comunican por lenguaje corporal: ¡entiende a tu perro a otro nivel!</string>
+    <string name="ContextArticulos4">Los perros se comunican con nosotros no solo a través del ladrido, sino también con el lenguaje corporal, las expresiones faciales y las vocalizaciones sutiles. Prestando atención a estas señales, podemos aprender a comprender mejor lo que nuestros perros quieren decirnos y fortalecer el vínculo que tenemos con ellos.</string>
+    <string name="TextArticulos4">¿Sabías que tu perro te habla en "perro"? Su cola moviéndose significa alegría, sus orejas hacia atrás indican miedo, y una lamida en la cara es una muestra de afecto. Aprender a interpretar el lenguaje corporal de tu perro te permitirá comprender mejor sus emociones, necesidades y deseos, creando una conexión más profunda y duradera con tu amigo peludo.</string>
+    <string name="_4_agilidad">4. Agilidad</string>
 </resources>

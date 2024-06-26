@@ -10,12 +10,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicationpaw.R
 import com.example.aplicationpaw.views.ui.biblioteca.data.CardData
 
-class CardAdapter(private val context: Context, private val dataList: List<CardData>) :
+class CardAdapter(private val context: Context, private val dataList: List<CardData>, private val listener: OnItemClickListener) :
     RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val textView: TextView = itemView.findViewById(R.id.textView)
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

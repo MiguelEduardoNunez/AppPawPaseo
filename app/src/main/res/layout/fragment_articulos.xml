@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.biblioteca_views.ArticulosFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/tittleArticulos"
+            android:textAlignment="center"
+            android:textColor="@color/azul"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/Articulos1"
+                    android:textColor="@color/azulClaro"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="5sp"
+                    android:text="@string/ContextArticulos1"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="2"
+                        android:padding="5sp"
+                        android:text="@string/TextArticulos1"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/covid" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/Articulos2"
+                    android:textColor="@color/azulClaro"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="5sp"
+                    android:text="@string/ContextArticulos2"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/sonando" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="2"
+                        android:padding="5sp"
+                        android:text="@string/TextArticulos2"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/Articulos3"
+                    android:textColor="@color/azulClaro"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="5sp"
+                    android:text="@string/ContextArticulos3"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="2"
+                        android:padding="5sp"
+                        android:text="@string/TextArticulos3"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/estres" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/Articulos4"
+                    android:textColor="@color/azulClaro"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="5sp"
+                    android:text="@string/ContextArticulos4"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/lenguaje" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="2"
+                        android:padding="5sp"
+                        android:text="@string/TextArticulos4"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_home, R.id.bibliotecaFragment, R.id.perfilFragment,
                 R.id.paseosFragment, R.id.veterinariaFragment, R.id.guarderiaFragment,
-                R.id.homePaseadorFragment, R.id.detallePaseadorFragment, R.id.esperaUsuarioFragment
+                R.id.homePaseadorFragment, R.id.detallePaseadorFragment, R.id.esperaUsuarioFragment,
+                R.id.programaEntretenimientoFragment
             )
         )
         // Ocultar la flecha hacia atrás en la barra de acción
