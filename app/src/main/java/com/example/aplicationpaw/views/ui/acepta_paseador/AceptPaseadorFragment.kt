@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.aplicationpaw.R
 import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
@@ -67,11 +69,37 @@ class AceptPaseadorFragment : Fragment() {
 
     fun initOnClick(){
         btnLlegada.setOnClickListener {
+            database.child(userLogin).child(getString(R.string.paseadores)).child(user).child("status")
+                .setValue(view.context?.getString(R.string.completado)).addOnSuccessListener {
 
+                    database.child(userLogin).child("status")
+                        .setValue(view.context?.getString(R.string.completado)).addOnSuccessListener {
+                            Toast.makeText(context, "Se completo al servicio.", Toast.LENGTH_LONG).show();
+                            findNavController().popBackStack();
+                        }.addOnFailureListener {
+                            Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                        }
+
+                }.addOnFailureListener {
+                    Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                }
         }
 
         btnCancelar.setOnClickListener {
+            database.child(userLogin).child(getString(R.string.paseadores)).child(user).child("status")
+                .setValue(view.context?.getString(R.string.cancelado)).addOnSuccessListener {
 
+                    database.child(userLogin).child("status")
+                        .setValue(view.context?.getString(R.string.nuevo)).addOnSuccessListener {
+                            Toast.makeText(context, "Se cancelo al servicio.", Toast.LENGTH_LONG).show();
+                            findNavController().popBackStack();
+                        }.addOnFailureListener {
+                            Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                        }
+
+                }.addOnFailureListener {
+                    Toast.makeText(context, "Fallo", Toast.LENGTH_LONG).show();
+                }
         }
     }
 }
