@@ -132,4 +132,8 @@
     <string name="_4_agilidad">4. Agilidad</string>
     <string name="confirmacion_cancelar">¿Está seguro de cancelar su solicitud?</string>
     <string name="Aceptar_cancelacion">ACEPTAR</string>
+    <string name="calificacion">Calificacion</string>
+    <string name="estado">Estado</string>
+    <string name="mi_historial">Mi Historial</string>
+    <string name="nombre_mascota">Nombre Mascota</string>
 </resources>
